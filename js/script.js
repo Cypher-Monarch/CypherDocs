@@ -6,6 +6,7 @@ const pageTitles = {
   spectra: "Spectra | CypherDocs",
   chronolog: "ChronoLOG | CypherDocs",
   monarchdots: "MonarchDots | CypherDocs",
+  chrona: "Chrona | CypherDocs"
 };
 
 function initializeInstallTabs() {

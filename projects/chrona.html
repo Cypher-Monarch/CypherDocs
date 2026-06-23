@@ -1,0 +1,305 @@
+<!-- Hero -->
+<section id="hero-section">
+  <div class="hero-content">
+    <h1 id="project-title">Chrona</h1>
+
+    <p id="project-tagline">
+      Local text-to-speech and MP3 conversion for everyday documents.
+    </p>
+
+    <div class="meta-badges">
+      <span><i data-lucide="app-window"></i> PySide6</span>
+      <span><i data-lucide="globe-off"></i> Offline TTS</span>
+      <span><i data-lucide="tag"></i> v1.0.0</span>
+    </div>
+
+    <p id="project-description">
+      <br />
+      Chrona is a lightweight desktop text-to-speech utility that reads local
+      TXT, DOCX, and PDF files aloud, exports them as MP3, or does both in one
+      pass through a compact desktop interface.
+    </p>
+
+    <div id="project-links">
+      <a id="github-link" href="https://github.com/Cypher-Monarch/Chrona">
+        <i data-lucide="code-xml"></i>
+        View Source
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- What is Chrona -->
+<section id="overview-section">
+  <h2 class="section-title">What is Chrona?</h2>
+
+  <div class="content-block">
+    <p>
+      Chrona is a desktop utility built around one simple workflow: choose a
+      document, extract its text, and convert it into speech or an MP3 file.
+    </p>
+
+    <p>
+      It is designed for local use and keeps the entire text-to-speech pipeline
+      on the user’s machine instead of relying on a web service or cloud API.
+    </p>
+
+    <p>
+      The goal is not to be a giant accessibility suite. It is a focused tool
+      for turning documents into spoken output quickly, with a small interface
+      and a predictable workflow.
+    </p>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features-section">
+  <h2 class="section-title">Features</h2>
+
+  <div id="features-grid">
+    <article class="feature-card">
+      <h3>Document Support</h3>
+      <p>
+        Reads <strong>.txt</strong>, <strong>.docx</strong>, and
+        <strong>.pdf</strong> files through dedicated text extraction handlers.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Speak, Export, or Both</h3>
+      <p>
+        Supports three output modes: speak only, MP3 only, or a combined mode
+        that performs both in one run.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Voice Selection</h3>
+      <p>
+        Exposes available system voices through a dropdown so playback can be
+        adjusted without touching the code.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Speech Rate Control</h3>
+      <p>
+        Includes a speed slider for tuning playback rate directly inside the
+        application.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>MP3 Export</h3>
+      <p>
+        Converts spoken output into MP3 files and stores them in a dedicated
+        Chrona folder inside the user’s Documents directory.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Status Logging</h3>
+      <p>
+        Reports conversion progress, output paths, and errors directly inside
+        the application UI.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- Why -->
+<section id="why-section">
+  <h2 class="section-title">Why Chrona Exists</h2>
+
+  <div class="content-block">
+    <p>
+      Chrona was built around a very straightforward need: turning written
+      material into spoken output without depending on an online service or
+      bloated software stack.
+    </p>
+
+    <ul id="pain-points-list">
+      <li>Pick a document</li>
+      <li>Extract its text</li>
+      <li>Choose a voice and speed</li>
+      <li>Speak it aloud or export it as audio</li>
+      <li>Keep everything local and repeatable</li>
+    </ul>
+
+    <p>
+      Instead of stretching into a full productivity suite, Chrona keeps the
+      scope narrow and focuses on making that workflow easy.
+    </p>
+  </div>
+</section>
+
+<!-- Installation -->
+<section id="installation-section">
+  <h2 class="section-title">Installation</h2>
+
+  <p>
+    Select the installation method appropriate for your platform.<br /><br />
+  </p>
+  <div id="install-tabs">
+    <button class="install-tab active" data-target="arch-install">AUR</button>
+
+    <button class="install-tab" data-target="linux-install">Linux</button>
+
+    <button class="install-tab" data-target="windows-install">Windows</button>
+  </div>
+
+  <div id="installation-content">
+    <div id="arch-install" class="install-panel active">
+      <pre><code>yay -S chrona-bin</code></pre>
+    </div>
+
+    <div id="linux-install" class="install-panel">
+      <pre><code>curl -fsSL https://github.com/Cypher-Monarch/Chrona/releases/download/v1.0.0/install.sh | sudo bash</code></pre>
+    </div>
+
+    <div id="windows-install" class="install-panel">
+      <div class="download-card">
+        <h3>Installer</h3>
+
+        <p>Standard Windows installation experience.</p>
+
+        <a
+          class="download-btn"
+          href="https://github.com/Cypher-Monarch/Chrona/releases/download/v1.0.0/ChronaInstaller.exe"
+        >
+          <i data-lucide="download"></i>
+          Download Installer
+        </a>
+      </div>
+
+      <div class="download-card">
+        <h3>Portable</h3>
+
+        <p>No installation required.</p>
+
+        <a
+          class="download-btn"
+          href="https://github.com/Cypher-Monarch/CypherGate/releases/download/v1.0.1/Chrona-windows-v1.0.0.zip"
+        >
+          <i data-lucide="download"></i>
+          Download Portable
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works-section">
+  <h2 class="section-title">How It Works</h2>
+
+  <div class="content-block">
+    <pre><code>
+Document File
+    ↓
+TXT / DOCX / PDF Reader
+    ↓
+Extracted Text
+    ↓
+Voice + Speed Selection
+    ↓
+TTS Engine
+    ↓
+Speech / MP3 / Both
+</code></pre>
+
+    <p>
+      Chrona loads a supported document, extracts its text using the appropriate
+      parser, applies the selected voice and speech rate, and then either speaks
+      the result aloud, exports it as MP3, or performs both operations in
+      sequence.
+    </p>
+  </div>
+</section>
+
+<!-- File Locations -->
+<section id="file-locations-section">
+  <h2 class="section-title">File Locations</h2>
+
+  <div class="content-block">
+    <code class="path-block"> ~/Documents/Chrona </code>
+
+    <ul id="log-locations-list">
+      <li>Generated MP3 exports are stored here</li>
+      <li>Temporary WAV files are created during MP3 conversion</li>
+      <li>Chrona uses this directory as its default audio output location</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Technical Details -->
+<section id="technical-section">
+  <h2 class="section-title">Technical Details</h2>
+
+  <div id="features-grid-big">
+    <article class="feature-card">
+      <h3>Desktop Stack</h3>
+      <ul class="platform-list">
+        <li><strong>PySide6</strong> for the GUI</li>
+        <li><strong>pyttsx3</strong> for text-to-speech</li>
+        <li><strong>pydub</strong> for MP3 conversion/export</li>
+        <li><strong>PyPDF2</strong> for PDF text extraction</li>
+        <li><strong>python-docx</strong> for DOCX parsing</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Application Flow</h3>
+      <ul class="platform-list">
+        <li>Loads a file through a desktop file picker</li>
+        <li>Routes it through the correct document reader</li>
+        <li>Applies selected voice and speed settings</li>
+        <li>Runs speech output, MP3 export, or both</li>
+        <li>Logs results and errors inside the application</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Output Handling</h3>
+      <ul class="platform-list">
+        <li>Creates a Chrona directory under Documents if needed</li>
+        <li>Uses a temporary WAV as part of MP3 export</li>
+        <li>Exports the final MP3 and removes the temporary file</li>
+        <li>Keeps the entire workflow local and file-based</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Quality-of-Life Features</h3>
+      <ul class="platform-list">
+        <li>Advanced options toggle for output mode selection</li>
+        <li>Confirmation prompt before conversion begins</li>
+        <li>Status panel for progress and error feedback</li>
+        <li>Basic update check against the GitHub version file</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Final Note -->
+<section id="final-note-section">
+  <h2 class="section-title">Final Note</h2>
+
+  <blockquote id="final-note-quote">Simple on purpose.</blockquote>
+
+  <ul class="final-note-list">
+    <li>
+      Chrona is not trying to be a giant accessibility platform or a cloud
+      speech service.
+    </li>
+    <li>
+      It exists to make local document-to-speech conversion straightforward,
+      especially when the goal is to turn a file into spoken output or an MP3
+      without unnecessary friction.
+    </li>
+    <li>
+      The focus is a compact desktop UI, predictable file handling, and an
+      entirely local workflow.
+    </li>
+  </ul>
+</section>
