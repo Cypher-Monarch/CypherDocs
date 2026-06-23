@@ -303,13 +303,13 @@ section {
   color: var(--text-muted);
 }
 
-#features-grid-chronolog {
+#features-grid-big {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
-#features-grid-chronolog .feature-card {
+#features-grid-big .feature-card {
   padding: 2rem;
 }
 
@@ -526,8 +526,8 @@ code {
 /* ========================= */
 
 @media (max-width: 768px) {
-  #cyphergate-page {
-    width: 95%;
+  #features-grid-big {
+    grid-template-columns: 1fr;
   }
 
   .section-title {
