@@ -43,7 +43,7 @@ strong {
   color: var(--gold);
 }
 
-::selection {
+::selection, ::-moz-selection {
   background: var(--gold);
   color: var(--bg);
 }
