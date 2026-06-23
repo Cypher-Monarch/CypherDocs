@@ -47,8 +47,7 @@ async function loadPage(page) {
     const html = await response.text();
     content.innerHTML = html;
 
-    document.title =
-      pageTitles[page] || "CypherDocs | Cypher-Monarch";
+    document.title = pageTitles[page] || "CypherDocs | Cypher-Monarch";
 
     initializePage();
   } catch {

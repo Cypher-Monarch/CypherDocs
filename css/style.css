@@ -1,51 +1,51 @@
 :root {
-    --bg: #0f0f0f;
-    --surface: #141414;
-    --surface-hover: #1b1b1b;
+  --bg: #0f0f0f;
+  --surface: #141414;
+  --surface-hover: #1b1b1b;
 
-    --gold: #d4af37;
-    --gold-hover: #e2c04a;
+  --gold: #d4af37;
+  --gold-hover: #e2c04a;
 
-    --text: #f2f2f2;
-    --text-muted: #9d9d9d;
+  --text: #f2f2f2;
+  --text-muted: #9d9d9d;
 
-    --border: #242424;
+  --border: #242424;
 
-    --radius: 16px;
-    --transition: 0.25s ease;
+  --radius: 16px;
+  --transition: 0.25s ease;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth; 
+  scroll-behavior: smooth;
 }
 
 body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "JetBrains Mono", monospace;
-    line-height: 1.7;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  line-height: 1.7;
 }
 
 svg.lucide {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 
-    stroke-width: 2;
+  stroke-width: 2;
 }
 
 strong {
-    color: var(--gold);
+  color: var(--gold);
 }
 
 ::selection {
-    background: var(--gold);
-    color: var(--bg);
+  background: var(--gold);
+  color: var(--bg);
 }
 
 /* ========================= */
@@ -53,71 +53,71 @@ strong {
 /* ========================= */
 
 #content {
-    width: min(1100px, 90%);
-    margin: 0 auto;
-    padding: 4rem 0;
+  width: min(1100px, 90%);
+  margin: 0 auto;
+  padding: 4rem 0;
 }
 
 section {
-    margin-bottom: 8rem;
+  margin-bottom: 8rem;
 }
 
 .section-title {
-    font-size: 2.5rem;
-    color: var(--gold);
-    margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 2rem;
 }
 
 #site-header {
-    position: sticky;
-    top: 0;
+  position: sticky;
+  top: 0;
 
-    z-index: 100;
+  z-index: 100;
 
-    backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 
-    background: rgba(15, 15, 15, 0.85);
+  background: rgba(15, 15, 15, 0.85);
 
-    border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 #header-inner {
-    width: min(1100px, 90%);
+  width: min(1100px, 90%);
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
-    justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 
-    padding: 1rem 0;
+  padding: 1rem 0;
 }
 
 #site-logo {
-    color: var(--gold);
+  color: var(--gold);
 
-    text-decoration: none;
+  text-decoration: none;
 
-    font-size: 1.2rem;
-    font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 #site-nav {
-    display: flex;
-    gap: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
 }
 
 #site-nav a {
-    color: var(--text-muted);
+  color: var(--text-muted);
 
-    text-decoration: none;
+  text-decoration: none;
 
-    transition: var(--transition);
+  transition: var(--transition);
 }
 
 #site-nav a:hover {
-    color: var(--gold);
+  color: var(--gold);
 }
 
 /* ========================= */
@@ -125,43 +125,43 @@ section {
 /* ========================= */
 
 #hero-section {
-    min-height: 65vh;
+  min-height: 65vh;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
-    text-align: center;
-    max-width: 850px;
+  text-align: center;
+  max-width: 850px;
 }
 
 #project-title {
-    font-size: clamp(3rem, 7vw, 5rem);
-    color: var(--gold);
+  font-size: clamp(3rem, 7vw, 5rem);
+  color: var(--gold);
 
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 #project-tagline {
-    font-size: 1.4rem;
-    color: var(--gold);
+  font-size: 1.4rem;
+  color: var(--gold);
 
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 #project-description {
-    color: var(--text-muted);
+  color: var(--text-muted);
 
-    max-width: 700px;
-    margin: 0 auto 3rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
 }
 
 #github-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* ========================= */
@@ -169,18 +169,18 @@ section {
 /* ========================= */
 
 #project-links {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 #project-links a {
-    color: var(--text-muted);
-    text-decoration: none;
+  color: var(--text-muted);
+  text-decoration: none;
 
-    transition: var(--transition);
+  transition: var(--transition);
 }
 
 #project-links a:hover {
-    color: var(--gold);
+  color: var(--gold);
 }
 
 /* ========================= */
@@ -188,82 +188,82 @@ section {
 /* ========================= */
 
 #showcase-container {
-    width: 100%;
+  width: 100%;
 
-    border-radius: 16px;
-    overflow: hidden;
+  border-radius: 16px;
+  overflow: hidden;
 
-    border: 1px solid var(--border);
+  border: 1px solid var(--border);
 
-    background: var(--surface);
+  background: var(--surface);
 }
 
 #showcase-container video {
-    display: block;
+  display: block;
 
-    width: 75%;
-    height: auto;
+  width: 75%;
+  height: auto;
 
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .meta-badges {
-    width: 75%;
+  width: 75%;
 
-    margin: 0.75rem auto 0;
+  margin: 0.75rem auto 0;
 
-    display: flex;
-    gap: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
 
-    justify-content: center;
+  justify-content: center;
 }
 
 .meta-badges span {
-    display: inline-flex;
+  display: inline-flex;
 
-    align-items: center;
-    gap: 0.4rem;
+  align-items: center;
+  gap: 0.4rem;
 
-    padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.8rem;
 
-    border-radius: 999px;
+  border-radius: 999px;
 
-    background: var(--surface);
-    border: 1px solid var(--border);
+  background: var(--surface);
+  border: 1px solid var(--border);
 
-    color: var(--text-muted);
+  color: var(--text-muted);
 }
 
 .meta-badges span:hover {
-    border-color: var(--gold-hover);
-    color: var(--text);
+  border-color: var(--gold-hover);
+  color: var(--text);
 }
 
 #showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
 .showcase-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0;
 }
 
 .showcase-card-centered {
-    grid-column: 1 / -1;
-    max-width: calc(50% - 0.75rem);
-    justify-self: center;
+  grid-column: 1 / -1;
+  max-width: calc(50% - 0.75rem);
+  justify-self: center;
 }
 
 .showcase-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
 
 /* ========================= */
@@ -271,47 +271,46 @@ section {
 /* ========================= */
 
 #features-grid {
-    display: grid;
+  display: grid;
 
-    grid-template-columns:
-        repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
-    gap: 1.25rem;
+  gap: 1.25rem;
 }
 
 .feature-card {
-    background: var(--surface);
+  background: var(--surface);
 
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 
-    padding: 1.5rem;
+  padding: 1.5rem;
 
-    transition: var(--transition);
+  transition: var(--transition);
 }
 
 .feature-card:hover {
-    transform: translateY(-4px);
-    background: var(--surface-hover);
+  transform: translateY(-4px);
+  background: var(--surface-hover);
 }
 
 .feature-card h3 {
-    color: var(--gold);
-    margin-bottom: 0.75rem;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
 }
 
 .feature-card p {
-    color: var(--text-muted);
+  color: var(--text-muted);
 }
 
 #features-grid-chronolog {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
 #features-grid-chronolog .feature-card {
-    padding: 2rem;
+  padding: 2rem;
 }
 
 /* ========================= */
@@ -319,24 +318,24 @@ section {
 /* ========================= */
 
 .content-block {
-    background: var(--surface);
+  background: var(--surface);
 
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 
-    padding: 2rem;
+  padding: 2rem;
 }
 
 .content-block p {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .content-block ul {
-    margin-left: 1.5rem;
+  margin-left: 1.5rem;
 }
 
 .content-block li {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* ========================= */
@@ -344,82 +343,82 @@ section {
 /* ========================= */
 
 #install-tabs {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .install-tab {
-    background: var(--surface);
+  background: var(--surface);
 
-    border: 1px solid var(--border);
+  border: 1px solid var(--border);
 
-    color: var(--text);
+  color: var(--text);
 
-    padding: 0.8rem 1.4rem;
-    border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: var(--transition);
+  transition: var(--transition);
 }
 
 .install-tab:hover {
-    border-color: var(--gold);
+  border-color: var(--gold);
 }
 
 .install-tab.active {
-    background: var(--gold);
-    color: black;
+  background: var(--gold);
+  color: black;
 }
 
 .install-panel {
-    display: none;
+  display: none;
 }
 
 .install-panel.active {
-    display: block;
+  display: block;
 }
 
 #windows-install.active {
-    display: grid;
-    gap: 1rem;
+  display: grid;
+  gap: 1rem;
 }
 
 .download-card {
-    background: var(--surface);
+  background: var(--surface);
 
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .download-card h3 {
-    color: var(--gold);
-    margin-bottom: 0.5rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
 }
 
 .download-card p {
-    color: var(--text-muted);
-    margin-bottom: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
 
 .download-btn {
-    display: inline-flex;
+  display: inline-flex;
 
-    align-items: center;
-    gap: 0.5rem;
+  align-items: center;
+  gap: 0.5rem;
 
-    background: var(--gold);
-    color: black;
+  background: var(--gold);
+  color: black;
 
-    padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.25rem;
 
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 /* ========================= */
@@ -427,19 +426,19 @@ section {
 /* ========================= */
 
 .platform-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .platform-list li {
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
 }
 
 .platform-list li::before {
-    content: ">_ ";
-    color: var(--text-muted);
+  content: ">_ ";
+  color: var(--text-muted);
 }
 
 /* ========================= */
@@ -447,24 +446,24 @@ section {
 /* ========================= */
 
 pre {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 pre code,
 .path-block,
 code {
-    font-family: inherit;
+  font-family: inherit;
 
-    background: #0f0f0f;
+  background: #0f0f0f;
 
-    border: 1px solid var(--border);
-    border-radius: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
 
-    display: block;
+  display: block;
 
-    padding: 1rem;
+  padding: 1rem;
 
-    color: var(--gold);
+  color: var(--gold);
 }
 
 /* ========================= */
@@ -472,19 +471,19 @@ code {
 /* ========================= */
 
 #final-note-quote {
-    border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--gold);
 
-    padding-left: 1rem;
+  padding-left: 1rem;
 
-    color: var(--gold);
+  color: var(--gold);
 
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 #final-note-text {
-    color: var(--text-muted);
+  color: var(--text-muted);
 }
 
 /* ========================= */
@@ -492,34 +491,34 @@ code {
 /* ========================= */
 
 #site-footer {
-    border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border);
 
-    margin-top: 6rem;
+  margin-top: 6rem;
 }
 
 #footer-inner {
-    width: min(1100px, 90%);
+  width: min(1100px, 90%);
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    padding: 2rem 0;
+  padding: 2rem 0;
 
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #footer-inner a {
-    color: var(--text-muted);
+  color: var(--text-muted);
 
-    text-decoration: none;
+  text-decoration: none;
 
-    transition: var(--transition);
+  transition: var(--transition);
 }
 
 #footer-inner a:hover {
-    color: var(--gold);
+  color: var(--gold);
 }
 
 /* ========================= */
@@ -527,24 +526,23 @@ code {
 /* ========================= */
 
 @media (max-width: 768px) {
+  #cyphergate-page {
+    width: 95%;
+  }
 
-    #cyphergate-page {
-        width: 95%;
-    }
+  .section-title {
+    font-size: 2rem;
+  }
 
-    .section-title {
-        font-size: 2rem;
-    }
+  #project-title {
+    font-size: 3rem;
+  }
 
-    #project-title {
-        font-size: 3rem;
-    }
+  #install-tabs {
+    flex-wrap: wrap;
+  }
 
-    #install-tabs {
-        flex-wrap: wrap;
-    }
-
-    section {
-        margin-bottom: 5rem;
-    }
+  section {
+    margin-bottom: 5rem;
+  }
 }
