@@ -67,5 +67,27 @@ function handleRoute() {
   loadPage(page);
 }
 
+function initializeNavToggle() {
+  const navToggle = document.getElementById("nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+
+  if (!navToggle || !siteNav) return;
+
+  navToggle.addEventListener("click", () => {
+    siteNav.classList.toggle("open");
+
+    const isExpanded = siteNav.classList.contains("open");
+    navToggle.setAttribute("aria-expanded", isExpanded);
+  });
+
+  siteNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      siteNav.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
 window.addEventListener("hashchange", handleRoute);
+initializeNavToggle();
 handleRoute();
