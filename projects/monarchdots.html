@@ -1,0 +1,351 @@
+<!-- Hero -->
+
+<section id="hero-section">
+  <div class="hero-content">
+    <h1 id="project-title">MonarchDots</h1>
+
+    <p id="project-tagline">Clean, minimal, fast.</p>
+
+    <div class="meta-badges">
+      <span><i data-lucide="navigation-2"></i> Arch Linux</span>
+      <span><i data-lucide="monitor"></i> Hyprland</span>
+      <span><i data-lucide="terminal-square"></i> Bootstrap Support</span>
+    </div>
+
+    <p id="project-description">
+      <br />
+      A curated Hyprland-centric dotfiles setup built for Arch Linux.
+      MonarchDots bundles the configs, scripts, theming, and tooling needed to
+      turn a fresh install into a cohesive Wayland desktop without manually
+      assembling every piece yourself.
+    </p>
+
+    <div id="project-links">
+      <a id="github-link" href="https://github.com/Cypher-Monarch/MonarchDots">
+        <i data-lucide="code-xml"></i>
+        View Source
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase -->
+
+<section id="showcase-section">
+  <h2 class="section-title">Showcase</h2>
+
+  <div id="showcase-grid">
+    <article class="showcase-card">
+      <img
+        src="https://cypher-monarch.github.io/arsenal/assets/hypr1-bare.png"
+        alt="MonarchDots screenshot 1"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="https://cypher-monarch.github.io/arsenal/assets/hypr2-bare.png"
+        alt="MonarchDots screenshot 2"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="https://cypher-monarch.github.io/arsenal/assets/hypr3-bare.png"
+        alt="MonarchDots screenshot 3"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="https://cypher-monarch.github.io/arsenal/assets/hypr4-bare.png"
+        alt="MonarchDots screenshot 4"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card showcase-card-centered">
+      <img
+        src="https://cypher-monarch.github.io/arsenal/assets/hypr5-bare.png"
+        alt="MonarchDots screenshot 5"
+        class="showcase-image"
+      />
+    </article>
+  </div>
+
+  <div class="meta-badges">
+    <span><i data-lucide="palette"></i> Gruvbox</span>
+    <span><i data-lucide="sparkles"></i> Eww + Waybar + Cava</span>
+    <span><i data-lucide="mouse-pointer-click"></i> Hyprland Workflow</span>
+  </div>
+</section>
+
+<!-- What is MonarchDots -->
+
+<section id="overview-section">
+  <h2 class="section-title">What is MonarchDots?</h2>
+
+  <div class="content-block">
+    <p>
+      MonarchDots is a Hyprland-centric dotfiles setup for Arch Linux built
+      around a single idea: a desktop should feel cohesive, not like a random
+      collection of configs stitched together over six different weekends.
+    </p>
+
+    <p>
+      It bundles the pieces that shape a Wayland workflow — window management,
+      bars, launchers, notifications, lockscreen, widgets, shell setup, helper
+      scripts, and theming — into one reproducible setup that can be deployed
+      from a fresh install with a bootstrap script.
+    </p>
+
+    <p>
+      The goal is not to provide every possible option under the sun. It is to
+      provide one opinionated setup that looks good, feels fast, and works as a
+      complete environment instead of a pile of disconnected components.
+    </p>
+  </div>
+</section>
+
+<!-- What's Included -->
+
+<section id="features-section">
+  <h2 class="section-title">What's Included</h2>
+
+  <div id="features-grid">
+    <article class="feature-card">
+      <h3>Hyprland Core</h3>
+      <ul>
+        <li>Hyprland</li>
+        <li>Hyprlock</li>
+        <li>Hyprpaper</li>
+        <li>Monitor configuration</li>
+        <li>Animations and desktop behavior</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Bars, Widgets, Notifications</h3>
+      <ul>
+        <li>Waybar</li>
+        <li>Eww</li>
+        <li>SwayNC</li>
+        <li>Supporting desktop widgets and scripts</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Launchers and Menus</h3>
+      <ul>
+        <li>Fuzzel</li>
+        <li>Rofi</li>
+        <li>Wlogout</li>
+        <li>rofimoji</li>
+        <li>cliphist</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Terminal and Shell</h3>
+      <ul>
+        <li>Kitty</li>
+        <li>Zsh</li>
+        <li>Powerlevel10k</li>
+        <li>Zinit</li>
+        <li>FZF</li>
+        <li>Gruvbox LS_COLORS</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Visual Layer</h3>
+      <ul>
+        <li>Waypaper</li>
+        <li>Cava</li>
+        <li>Wallpapers and theming</li>
+        <li>Icon themes and visual polish</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Helper Scripts</h3>
+      <ul>
+        <li>Power actions</li>
+        <li>Screenshots</li>
+        <li>Wallpaper utilities</li>
+        <li>Workflow glue scripts</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Installation -->
+
+<section id="installation-section">
+  <h2 class="section-title">Installation</h2>
+
+  <div id="install-tabs">
+    <button class="install-tab active" data-target="bootstrap-install">
+      Bootstrap
+    </button>
+
+    <button class="install-tab" data-target="manual-install">Manual</button>
+
+    <button class="install-tab" data-target="bootstrap-behavior">
+      What It Does
+    </button>
+  </div>
+
+  <div id="installation-content">
+    <div id="bootstrap-install" class="install-panel active">
+      <pre><code>curl -fsSL https://github.com/Cypher-Monarch/MonarchDots/releases/latest/download/bootstrap-v1.0.sh > install.sh
+chmod +x install.sh
+./install.sh</code></pre>
+    </div>
+
+    <div id="manual-install" class="install-panel">
+      <pre><code>git clone https://github.com/Cypher-Monarch/MonarchDots
+rsync -a MonarchDots/home/ ~/</code></pre>
+    </div>
+
+    <div id="bootstrap-behavior" class="install-panel">
+      <div class="content-block">
+        <ul>
+          <li>
+            Verifies you're running as a normal user on an Arch-based system.
+          </li>
+          <li>
+            Clones or refreshes the MonarchDots repository in a temporary
+            directory.
+          </li>
+          <li>
+            Optionally installs Chaotic-AUR and detects or installs an AUR
+            helper.
+          </li>
+          <li>Installs pacman and AUR dependencies required by the setup.</li>
+          <li>Patches hardcoded home paths in dotfiles before copying them.</li>
+          <li>
+            Copies configs into your home directory and optionally installs
+            wallpapers.
+          </li>
+          <li>
+            Enables essential services and optionally applies the GRUB theme.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Design Philosophy -->
+
+<section id="design-philosophy-section">
+  <h2 class="section-title">Design Philosophy</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>
+        Minimal, but complete enough to feel like a full desktop rather than a
+        demo.
+      </li>
+      <li>Fast and responsive in daily use, not just in screenshots.</li>
+      <li>
+        Visually consistent across bars, launchers, notifications, and shell
+        tooling.
+      </li>
+      <li>
+        Reproducible from a fresh install without manually wiring everything
+        together.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Requirements -->
+
+<section id="requirements-section">
+  <h2 class="section-title">Requirements</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>Arch Linux or an Arch-based system.</li>
+      <li>Wayland / Hyprland workflow.</li>
+      <li>PipeWire + WirePlumber.</li>
+      <li>Nerd Fonts and related desktop dependencies.</li>
+      <li>Sudo access and a normal user account.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Post-Install Notes -->
+
+<section id="post-install-section">
+  <h2 class="section-title">Post-Install Notes</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>
+        Edit <strong>~/.config/hypr/conf/monitors/default.lua</strong> to match
+        your monitor name from <strong>hyprctl monitors</strong>.
+      </li>
+      <li>A reboot is recommended after installation.</li>
+      <li>
+        The installer supports a <strong>--dry-run</strong> mode for previewing
+        actions without making changes.
+      </li>
+      <li>Wallpaper pack installation is optional.</li>
+      <li>GRUB theme application is optional.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Roadmap -->
+
+<section id="roadmap-section">
+  <h2 class="section-title">Roadmap</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>Improve bootstrap reliability and detection.</li>
+      <li>Automatic monitor and resolution profiles.</li>
+      <li>Dynamic wallpaper and theme switching.</li>
+      <li>More Waybar themes and layout presets.</li>
+      <li>Better laptop vs desktop power profile handling.</li>
+      <li>Optional minimal install mode.</li>
+      <li>
+        Long-term: multi-distro support, GPU detection, and install-time theme
+        presets.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Final Note -->
+
+<section id="final-note-section">
+  <h2 class="section-title">Final Note</h2>
+
+  <blockquote id="final-note-quote">
+    Why spend time looking at a boring desktop, when you can look at a pretty
+    one.
+  </blockquote>
+
+  <ul class="platform-list final-note-list">
+    <li>MonarchDots is intentionally opinionated.</li>
+    <li>
+      It is not trying to support every workflow, every distro, or every
+      aesthetic direction at once.
+    </li>
+    <li>
+      The goal is a setup that feels cohesive, fast, and pleasant to live in
+      every day.
+    </li>
+    <li>
+      If you want a clean starting point for a Hyprland setup on Arch, that's
+      what it's here for.
+    </li>
+  </ul>
+</section>

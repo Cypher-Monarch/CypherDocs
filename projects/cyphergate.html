@@ -1,0 +1,278 @@
+<!-- Hero -->
+<section id="hero-section">
+  <div class="hero-content">
+    <h1 id="project-title">CypherGate</h1>
+
+    <p id="project-tagline">Anyone can hide. Few remain hidden.</p>
+
+    <div class="meta-badges">
+      <span>Linux First</span>
+      <span>Open Source</span>
+      <span>v2.0.0</span>
+    </div>
+
+    <p id="project-description">
+      <br />
+      A Linux-first VPNGate client that automates server discovery, repairs
+      broken configurations, and removes the manual work traditionally required
+      to connect to VPNGate servers.
+    </p>
+
+    <div id="project-links">
+      <a id="github-link" href="https://github.com/Cypher-Monarch/CypherGate">
+        <i data-lucide="code-xml"></i>
+        View Source
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase -->
+<section id="showcase-section">
+  <h2 class="section-title">Showcase</h2>
+
+  <div id="showcase-container">
+    <video controls>
+      <source
+        src="https://github.com/Cypher-Monarch/CypherGate/raw/c93984c4f634609e73a2fb265a02538255ade80c/Assets/showcase.mp4"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+
+  <div class="meta-badges">
+    <span><i data-lucide="circle"></i> Recorded on Arch Linux</span>
+    <span>Hyprland</span>
+  </div>
+</section>
+
+<!-- What is CypherGate -->
+<section id="overview-section">
+  <h2 class="section-title">What is CypherGate?</h2>
+
+  <div class="content-block">
+    <p>
+      VPNGate provides thousands of publicly accessible VPN servers maintained
+      by volunteers around the world.
+    </p>
+
+    <p>
+      While useful, many VPNGate profiles require manual fixes before they work
+      reliably with modern OpenVPN installations.
+    </p>
+
+    <p>
+      CypherGate automates that process by retrieving live servers, repairing
+      outdated configurations, and managing connections through a simple
+      graphical interface.
+    </p>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features-section">
+  <h2 class="section-title">Features</h2>
+
+  <div id="features-grid">
+    <article class="feature-card">
+      <h3>Live VPNGate Integration</h3>
+      <p>Retrieves live VPNGate servers directly from the official API.</p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Automatic Configuration Repair</h3>
+      <p>Fixes outdated ciphers and compatibility issues before connection.</p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Fastest Server Selection</h3>
+      <p>
+        Sorts servers by latency and supports one-click automatic connection.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Modern Qt Interface</h3>
+      <p>Built with PySide6 and designed around simplicity.</p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Offline Cache</h3>
+      <p>Stores previously downloaded server lists for improved reliability.</p>
+    </article>
+
+    <article class="feature-card">
+      <h3>Connection Logging</h3>
+      <p>Detailed logs for diagnostics and troubleshooting.</p>
+    </article>
+  </div>
+</section>
+
+<!-- Why -->
+<section id="why-section">
+  <h2 class="section-title">Why CypherGate Exists</h2>
+
+  <div class="content-block">
+    <p>
+      The project started because manually working with VPNGate became annoying.
+    </p>
+
+    <ul id="pain-points-list">
+      <li>Download a server profile</li>
+      <li>Discover it doesn't work</li>
+      <li>Fix cipher settings</li>
+      <li>Repair compatibility issues</li>
+      <li>Try again</li>
+    </ul>
+
+    <p>
+      After repeating that workflow enough times, automating it became the
+      obvious solution.
+    </p>
+  </div>
+</section>
+
+<!-- Platform Support -->
+<section id="platform-support-section">
+  <h2 class="section-title">Platform Support</h2>
+
+  <div id="features-grid">
+    <article class="feature-card">
+      <h3>Linux</h3>
+      <ul class="platform-list">
+        <li>Fully supported and actively maintained.</li>
+        <li>All new development happens on Linux first.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Windows</h3>
+      <ul class="platform-list">
+        <li>Available through version 1.0.1.</li>
+        <li>Future development is Linux-only.</li>
+        <li>Windows maintainers welcome.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Installation -->
+<section id="installation-section">
+  <h2 class="section-title">Installation</h2>
+
+  <p>
+    Select the installation method appropriate for your platform.<br /><br />
+  </p>
+  <div id="install-tabs">
+    <button class="install-tab active" data-target="arch-install">AUR</button>
+
+    <button class="install-tab" data-target="linux-install">Linux</button>
+
+    <button class="install-tab" data-target="windows-install">Windows</button>
+  </div>
+
+  <div id="installation-content">
+    <div id="arch-install" class="install-panel active">
+      <pre><code>yay -S cyphergatevpn-bin</code></pre>
+    </div>
+
+    <div id="linux-install" class="install-panel">
+      <pre><code>curl -fsSL https://github.com/Cypher-Monarch/CypherGate/releases/download/v2.0.0/install.sh | sudo bash</code></pre>
+    </div>
+
+    <div id="windows-install" class="install-panel">
+      <div class="download-card">
+        <h3>Installer</h3>
+
+        <p>Standard Windows installation experience.</p>
+
+        <a
+          class="download-btn"
+          href="https://github.com/Cypher-Monarch/CypherGate/releases/download/v1.0.1/CypherGateInstaller-v1.0.1.exe"
+        >
+          <i data-lucide="download"></i>
+          Download Installer
+        </a>
+      </div>
+
+      <div class="download-card">
+        <h3>Portable</h3>
+
+        <p>No installation required.</p>
+
+        <a
+          class="download-btn"
+          href="https://github.com/Cypher-Monarch/CypherGate/releases/download/v1.0.1/CypherGate-Windows-v1.0.1.zip"
+        >
+          <i data-lucide="download"></i>
+          Download Portable
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works-section">
+  <h2 class="section-title">How It Works</h2>
+
+  <div class="content-block">
+    <pre><code>
+VPNGate API
+    ↓
+Server List
+    ↓
+Config Repair
+    ↓
+Root Handler
+    ↓
+OpenVPN
+    ↓
+Connected
+</code></pre>
+
+    <p>
+      CypherGate retrieves live VPNGate servers, repairs compatibility issues
+      automatically, and launches OpenVPN through a dedicated privileged helper
+      when elevated operations are required.
+    </p>
+  </div>
+</section>
+
+<!-- File Locations -->
+<section id="file-locations-section">
+  <h2 class="section-title">File Locations</h2>
+
+  <div class="content-block">
+    <code class="path-block"> ~/.config/cyphergate </code>
+
+    <ul id="log-locations-list">
+      <li>logs/ — Connection logs</li>
+      <li>cache/ — Cached VPNGate server lists</li>
+      <li>servers/ — Generated OpenVPN profiles</li>
+      <li>countries.conf — Country filters</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Final Note -->
+<section id="final-note-section">
+  <h2 class="section-title">Final Note</h2>
+
+  <blockquote id="final-note-quote">Very opinionated.</blockquote>
+
+  <ul class="final-note-list">
+    <li>CypherGate is not trying to be a universal VPN client.</li>
+    <li>
+      It exists to solve one specific problem: making VPNGate usable without
+      manually repairing configurations every time you want to connect.
+    </li>
+    <li>
+      It looks how I want it to look. It works how I want it to work. At least
+      for now.
+    </li>
+    <li>
+      A future update will likely add support for user CSS and custom styling.
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,405 @@
+<!-- Hero -->
+
+<section id="hero-section">
+  <div class="hero-content">
+    <h1 id="project-title">ChronoLOG</h1>
+
+    <p id="project-tagline">Plan smarter. Study longer. Track everything.</p>
+
+    <div class="meta-badges">
+      <span><i data-lucide="app-window"></i> PySide6</span>
+      <span><i data-lucide="database"></i> MySQL</span>
+      <span><i data-lucide="graduation-cap"></i> Student Productivity</span>
+    </div>
+
+    <p id="project-description">
+      <br />
+      ChronoLOG is a PySide6-based desktop study planner and productivity tool
+      designed to help students organize tasks, schedule study sessions, track
+      progress, and manage notes in one place.
+    </p>
+
+    <p id="project-description">
+      It combines task management, scheduling, progress tracking, study mode,
+      and note-taking into a themeable desktop application built around the full
+      study workflow rather than just one isolated feature.
+    </p>
+
+    <div id="project-links">
+      <a id="github-link" href="https://github.com/Cypher-Monarch/ChronoLOG">
+        <i data-lucide="code-xml"></i>
+        View Source
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase -->
+
+<section id="showcase-section">
+  <h2 class="section-title">Showcase</h2>
+
+  <div id="showcase-grid">
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC1.png"
+        alt="ChronoLOG screenshot 1"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC2.png"
+        alt="ChronoLOG screenshot 2"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC3.png"
+        alt="ChronoLOG screenshot 3"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC4.png"
+        alt="ChronoLOG screenshot 4"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC5.png"
+        alt="ChronoLOG screenshot 5"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC6.png"
+        alt="ChronoLOG screenshot 6"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC7.png"
+        alt="ChronoLOG screenshot 7"
+        class="showcase-image"
+      />
+    </article>
+
+    <article class="showcase-card">
+      <img
+        src="../assets/chronolog/SC8.png"
+        alt="ChronoLOG screenshot 8"
+        class="showcase-image"
+      />
+    </article>
+  </div>
+
+  <div class="meta-badges">
+    <span><i data-lucide="layout-dashboard"></i> Dashboard and Planning</span>
+    <span><i data-lucide="notebook-tabs"></i> Notes and TTS</span>
+    <span><i data-lucide="timer"></i> Study Mode</span>
+  </div>
+</section>
+
+<!-- Project Status -->
+
+<section id="platform-support-section">
+  <h2 class="section-title">Project Status</h2>
+
+  <div id="features-grid-chronolog">
+    <article class="feature-card">
+      <h3>Current State</h3>
+      <ul>
+        <li>ChronoLOG is currently in development.</li>
+        <li>
+          Its core planner, notes, scheduling, and progress systems are already
+          structured into the application.
+        </li>
+        <li>
+          Features may still be refined, expanded, or replaced during
+          development.
+        </li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Focus</h3>
+      <ul>
+        <li>Student productivity and study planning.</li>
+        <li>
+          A unified workflow instead of separate tools for tasks, notes, and
+          scheduling.
+        </li>
+        <li>
+          A desktop-first interface built around long study sessions and
+          personal organization.
+        </li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Overview -->
+
+<section id="overview-section">
+  <h2 class="section-title">Overview</h2>
+
+  <div class="content-block">
+    <p>
+      ChronoLOG is built around a simple idea: studying gets messy when tasks,
+      schedules, notes, progress tracking, and session planning are all spread
+      across different apps with different interfaces and different workflows.
+    </p>
+
+    <p>
+      Instead of treating planning, studying, and note-taking as separate
+      problems, ChronoLOG tries to handle the full loop in one place. You can
+      organize subjects, create tasks, schedule study sessions, track progress,
+      enter a focused study mode, and manage notes without bouncing between
+      unrelated tools.
+    </p>
+  </div>
+</section>
+
+<!-- Core Architecture -->
+
+<section id="features-section">
+  <h2 class="section-title">Core Architecture</h2>
+
+  <div id="features-grid-chronolog">
+    <article class="feature-card">
+      <h3>Main Window</h3>
+      <ul>
+        <li>
+          <strong>MainWindow.StudyPlanner</strong> as the primary application
+          window.
+        </li>
+        <li>Coordinates navigation, tabs, and planner functionality.</li>
+        <li>Acts as the central entry point for the full workflow.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Sidebar and Navigation</h3>
+      <ul>
+        <li>Collapsible sidebar with expand/collapse animations.</li>
+        <li>Tabs for Home, Subjects, Tasks, Schedule, Progress, and Notes.</li>
+        <li>Status bar for live updates and notifications.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Notes System</h3>
+      <ul>
+        <li>Dedicated <strong>NotesTab</strong> with rich text editing.</li>
+        <li>Integrated Text-to-Speech support.</li>
+        <li>File-based note management and export support.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Study Mode</h3>
+      <ul>
+        <li>Fullscreen focused study environment.</li>
+        <li>Built around the <strong>UltimateStudyTimer</strong>.</li>
+        <li>AFK detection during long study sessions.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Main Features -->
+
+<section id="functionality-section">
+  <h2 class="section-title">Main Features</h2>
+
+  <div id="features-grid-chronolog">
+    <article class="feature-card">
+      <h3>Home Dashboard</h3>
+      <ul>
+        <li>
+          Stats cards for pending tasks, study sessions, streaks, and progress.
+        </li>
+        <li>Recent activity feed.</li>
+        <li>Quick access to study mode.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Subjects Management</h3>
+      <ul>
+        <li>Create, edit, and delete subjects.</li>
+        <li>Priority system with High, Medium, and Low levels.</li>
+        <li>Safety checks for destructive actions.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Task System</h3>
+      <ul>
+        <li>Tasks linked to subjects, due dates, and priorities.</li>
+        <li>Completion tracking and scheduling support.</li>
+        <li>Context menus for quick actions.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Scheduling</h3>
+      <ul>
+        <li>Visual calendar of study sessions.</li>
+        <li>Filters for all, today, upcoming, and completed sessions.</li>
+        <li>Pending, in-progress, completed, and overdue session states.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Progress Tracking</h3>
+      <ul>
+        <li>Subject-wise and task-wise statistics.</li>
+        <li>Study time tracking and streak monitoring.</li>
+        <li>Visual progress indicators across the planner.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Notes and TTS</h3>
+      <ul>
+        <li>Rich text formatting with bold, italic, and underline support.</li>
+        <li>Text-to-Speech with voice and speed control.</li>
+        <li>MP3 export, word count, character count, and file operations.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Advanced Features -->
+
+<section id="advanced-features-section">
+  <h2 class="section-title">Advanced Features</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>
+        AFK detection with 20-minute check-ins and a 2-minute response timeout.
+      </li>
+      <li>Fullscreen study mode for focused sessions and long work blocks.</li>
+      <li>Recurring task support for daily, weekly, and monthly workflows.</li>
+      <li>Task dependency support for managing relationships between tasks.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Workflow -->
+
+<section id="workflow-section">
+  <h2 class="section-title">Workflow</h2>
+
+  <div class="content-block">
+    <ul>
+      <li>Create subjects to organize study topics.</li>
+      <li>Add tasks with priorities and due dates.</li>
+      <li>Schedule study sessions in the planner.</li>
+      <li>Track progress through statistics and streaks.</li>
+      <li>Enter study mode for focused sessions with AFK monitoring.</li>
+      <li>
+        Use notes with TTS and file management for revision and study support.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Technical Implementation -->
+
+<section id="technical-implementation-section">
+  <h2 class="section-title">Technical Implementation</h2>
+
+  <div id="features-grid-chronolog">
+    <article class="feature-card">
+      <h3>Frontend</h3>
+      <ul>
+        <li>PySide6 for the Qt-based desktop interface.</li>
+        <li>Animated sidebar, themed controls, and tabbed workflow.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Storage</h3>
+      <ul>
+        <li>MySQL via <strong>DBManager</strong> for persistent storage.</li>
+        <li>Per-user data association for personalization and separation.</li>
+        <li>Notes stored in <strong>Documents/ChronoLOG-Notes</strong>.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Audio and Notes</h3>
+      <ul>
+        <li><strong>pyttsx3</strong> for Text-to-Speech.</li>
+        <li><strong>pydub</strong> for MP3 export and audio processing.</li>
+      </ul>
+    </article>
+
+    <article class="feature-card">
+      <h3>Reliability</h3>
+      <ul>
+        <li>Daily log files for debugging and runtime visibility.</li>
+        <li>User-friendly error handling.</li>
+        <li>Database integrity and destructive-action safety checks.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Theme System -->
+
+<section id="theme-system-section">
+  <h2 class="section-title">Theme System</h2>
+
+  <div class="content-block">
+    <p>
+      ChronoLOG supports a consistent dark/light theme system across the
+      application. Buttons, controls, progress indicators, navigation elements,
+      list widgets, and text inputs are all styled as part of a single visual
+      system rather than treated as disconnected pieces of UI.
+    </p>
+  </div>
+</section>
+
+<!-- Final Note -->
+
+<section id="final-note-section">
+  <h2 class="section-title">Final Note</h2>
+
+  <blockquote id="final-note-quote">
+    Built to cover the full study workflow, not just one corner of it.
+  </blockquote>
+
+  <ul class="platform-list final-note-list">
+    <li>
+      ChronoLOG started as a student productivity project and grew into a
+      broader desktop study planner.
+    </li>
+    <li>
+      It is not trying to be a generic project management app with school labels
+      slapped on top.
+    </li>
+    <li>
+      The focus is on helping students plan, study, track, and revise in one
+      place.
+    </li>
+    <li>
+      The current feature set is broad, but the project is still evolving.
+    </li>
+  </ul>
+</section>
