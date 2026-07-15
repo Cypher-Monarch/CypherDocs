@@ -8,7 +8,7 @@
     <div class="meta-badges">
       <span><i data-lucide="package"></i> Linux First</span>
       <span><i data-lucide="lock-open"></i> Open Source</span>
-      <span><i data-lucide="tag"></i> v2.0.0</span>
+      <span><i data-lucide="tag"></i> v2.0.1</span>
     </div>
 
     <p id="project-description">
@@ -105,6 +105,18 @@
       <h3>Connection Logging</h3>
       <p>Detailed logs for diagnostics and troubleshooting.</p>
     </article>
+
+    <article class="feature-card">
+      <h3>Secure Daemon Architecture</h3>
+      <p>
+        Communicates with a hardened root daemon through a Unix socket protected
+        by Linux group permissions.
+      </p>
+    </article>
+    <article class="feature-card">
+      <h3>Signed Releases</h3>
+      <p>Official releases are cryptographically signed using GnuPG.</p>
+    </article>
   </div>
 </section>
 
@@ -173,11 +185,25 @@
 
   <div id="installation-content">
     <div id="arch-install" class="install-panel active">
+      <p>
+        <strong>1. FIRST TIME ONLY</strong> — Import the CypherGate release
+        signing key:
+      </p>
+      <br />
+      <pre><code>gpg --keyserver hkps://keys.openpgp.org \
+    --recv-keys 9ED87F6065033606670941AAC6C9B498797C980E</code></pre>
+
+      <br />
+      <br />
+
+      <p><strong>2.</strong> Install using your favourite AUR helper:</p>
+      <br />
+
       <pre><code>yay -S cyphergatevpn-bin</code></pre>
     </div>
 
     <div id="linux-install" class="install-panel">
-      <pre><code>curl -fsSL https://github.com/Cypher-Monarch/CypherGate/releases/download/v2.0.0/install.sh | sudo bash</code></pre>
+      <pre><code>curl -fsSL https://github.com/Cypher-Monarch/CypherGate/releases/latest/download/install.sh | sudo bash</code></pre>
     </div>
 
     <div id="windows-install" class="install-panel">
@@ -219,16 +245,21 @@
   <div class="content-block">
     <pre><code>
 VPNGate API
-    ↓
-Server List
-    ↓
-Config Repair
-    ↓
-Root Handler
-    ↓
+      │
+      ▼
+Configuration Repair
+      │
+      ▼
+Qt Frontend
+      │
+      ▼
+Unix Socket
+      │
+      ▼
+cyphergated
+      │
+      ▼
 OpenVPN
-    ↓
-Connected
 </code></pre>
 
     <p>
@@ -271,6 +302,7 @@ Connected
       It looks how I want it to look. It works how I want it to work. At least
       for now.
     </li>
+    <li>Official release archives are cryptographically signed using GnuPG.</li>
     <li>
       A future update will likely add support for user CSS and custom styling.
     </li>
