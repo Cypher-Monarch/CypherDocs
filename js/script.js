@@ -1,14 +1,3 @@
-const content = document.getElementById("content");
-
-const pageTitles = {
-  home: "CypherDocs | Cypher-Monarch",
-  cyphergate: "CypherGate | CypherDocs",
-  spectra: "Spectra | CypherDocs",
-  chronolog: "ChronoLOG | CypherDocs",
-  monarchdots: "MonarchDots | CypherDocs",
-  chrona: "Chrona | CypherDocs",
-};
-
 function initializeInstallTabs() {
   const tabs = document.querySelectorAll(".install-tab");
   const panels = document.querySelectorAll(".install-panel");
@@ -32,40 +21,24 @@ function initializeInstallTabs() {
   });
 }
 
-function initializePage() {
-  lucide.createIcons();
-  initializeInstallTabs();
-}
+function initializeDocsNavigation() {
+  const details = document.querySelectorAll(
+    ".docs-sidebar details, .docs-toc details"
+  );
 
-async function loadPage(page) {
-  try {
-    const response = await fetch(`projects/${page}.html`);
+  if (!details.length) return;
 
-    if (!response.ok) {
-      throw new Error("Page not found");
-    }
+  const mediaQuery = window.matchMedia("(max-width: 768px)");
 
-    const html = await response.text();
-    content.innerHTML = html;
+  const syncDetails = (event) => {
+    details.forEach((element) => {
+      element.open = !event.matches;
+    });
+  };
 
-    document.title = pageTitles[page] || "CypherDocs | Cypher-Monarch";
+  syncDetails(mediaQuery);
 
-    initializePage();
-  } catch {
-    content.innerHTML = `
-      <section>
-        <h1>404</h1>
-        <p>Page not found.</p>
-      </section>
-    `;
-
-    document.title = "404 | CypherDocs";
-  }
-}
-
-function handleRoute() {
-  const page = location.hash.replace("#", "") || "home";
-  loadPage(page);
+  mediaQuery.addEventListener("change", syncDetails);
 }
 
 function initializeNavToggle() {
@@ -89,6 +62,14 @@ function initializeNavToggle() {
   });
 }
 
-window.addEventListener("hashchange", handleRoute);
-initializeNavToggle();
-handleRoute();
+function initializePage() {
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+
+  initializeInstallTabs();
+  initializeDocsNavigation();
+  initializeNavToggle();
+}
+
+initializePage();

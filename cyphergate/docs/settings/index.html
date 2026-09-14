@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Settings documentation for CypherGate.">
+  <title>Settings — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/" aria-current="page">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="settings">Settings</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p>CypherGate stores user settings in:</p>
+<pre><code class="language-text">~/.config/cyphergate/settings.json
+</code></pre>
+<p>If the file does not exist, it is created using the application's default
+configuration. Missing settings are also populated from the defaults.</p>
+<p>Settings are grouped into:</p>
+<ul>
+<li><code>theme</code></li>
+<li><code>icons</code></li>
+<li><code>widgets</code></li>
+<li><code>table</code></li>
+<li><code>application</code></li>
+<li><code>vpn</code></li>
+</ul>
+<p>Changes to supported settings are detected automatically and applied without
+restarting CypherGate.</p>
+<h2 id="theme"><code>theme</code></h2>
+<p>Controls the application's Qt stylesheet.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td>string</td>
+<td><code>builtin</code> or <code>custom</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Name of a builtin theme</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>string/null</td>
+<td>Path to a custom <code>.qss</code> theme</td>
+</tr>
+</tbody>
+</table>
+<p>For a builtin theme:</p>
+<pre><code class="language-json">{
+  &quot;theme&quot;: {
+    &quot;mode&quot;: &quot;builtin&quot;,
+    &quot;name&quot;: &quot;playful&quot;,
+    &quot;path&quot;: null
+  }
+}
+</code></pre>
+<p>For a custom theme:</p>
+<pre><code class="language-json">{
+  &quot;theme&quot;: {
+    &quot;mode&quot;: &quot;custom&quot;,
+    &quot;name&quot;: null,
+    &quot;path&quot;: &quot;/path/to/theme.qss&quot;
+  }
+}
+</code></pre>
+<p><em>user's home directory i.e. <code>~</code> is not automatically expanded so one must use the absolute path /home/foo</em></p>
+<h2 id="icons"><code>icons</code></h2>
+<p>Controls icon appearance.</p>
+<h3 id="iconssize"><code>icons.size</code></h3>
+<p>Sets the size of individual icons. The <code>tray</code> subsection controls the
+corresponding system-tray menu icons.</p>
+<h3 id="iconscolor"><code>icons.color</code></h3>
+<p>Sets the color of individual icons. Colors use Qt-compatible color strings,
+such as <code>#FFD700</code>. The <code>tray</code> subsection controls system-tray menu icons.</p>
+<h2 id="widgets"><code>widgets</code></h2>
+<h3 id="widgetsspinner"><code>widgets.spinner</code></h3>
+<p>Controls the connection spinner.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>size</code></td>
+<td>integer</td>
+<td>Spinner size in pixels</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>string</td>
+<td>Spinner color</td>
+</tr>
+<tr>
+<td><code>thickness</code></td>
+<td>integer</td>
+<td>Spinner stroke width</td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td>integer</td>
+<td>Animation update rate</td>
+</tr>
+<tr>
+<td><code>rotation_speed</code></td>
+<td>number</td>
+<td>Rotation speed in degrees per second</td>
+</tr>
+</tbody>
+</table>
+<h3 id="widgetstable"><code>widgets.table</code></h3>
+<p>Controls which server metadata is displayed and how servers are sorted.</p>
+<pre><code class="language-json">{
+  &quot;table&quot;: {
+    &quot;columns&quot;: [
+      &quot;country&quot;,
+      &quot;ping&quot;,
+      &quot;speed&quot;,
+      &quot;users&quot;
+    ],
+    &quot;sort_by&quot;: &quot;ping&quot;,
+    &quot;sort_order&quot;: &quot;ascending&quot;
+  }
+}
+</code></pre>
+<h4 id="columns"><code>columns</code></h4>
+<p>A list of server fields to display, in the order they should appear.</p>
+<p>Supported fields are:</p>
+<ul>
+<li><code>country</code></li>
+<li><code>ping</code></li>
+<li><code>speed</code></li>
+<li><code>users</code></li>
+<li><code>hostname</code></li>
+<li><code>ip</code></li>
+<li><code>country_short</code></li>
+<li><code>score</code></li>
+</ul>
+<p><em>Columns can be reordered or repeated.</em></p>
+<h4 id="sort-by"><code>sort_by</code></h4>
+<p>The server field used for sorting.</p>
+<h4 id="sort-order"><code>sort_order</code></h4>
+<p>Either <code>ascending</code> or <code>descending</code>.</p>
+<h2 id="application"><code>application</code></h2>
+<p>Controls general application behavior.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minimize_to_tray</code></td>
+<td>boolean</td>
+<td>Whether closing/minimizing the application sends it to the system tray</td>
+</tr>
+<tr>
+<td><code>notifications</code></td>
+<td>boolean</td>
+<td>Enables or disables desktop notifications</td>
+</tr>
+<tr>
+<td><code>status_update_interval</code></td>
+<td>integer</td>
+<td>Interval, in milliseconds, at which the GUI polls daemon status</td>
+</tr>
+<tr>
+<td><code>use_custom_fonts</code></td>
+<td>boolean</td>
+<td>Allow loading of fonts not installed system-wide</td>
+</tr>
+</tbody>
+</table>
+<p><em>builtin themes pastel-orange and win32 require value of <code>use_custom_fonts</code> to be set to <code>true</code> to get the complete theme experience</em></p>
+<h2 id="vpn"><code>vpn</code></h2>
+<p>Controls VPN connection behavior.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>connection_timeout</code></td>
+<td>integer</td>
+<td>Maximum time, in seconds, to wait for a connection</td>
+</tr>
+<tr>
+<td><code>default_country</code></td>
+<td>string/null</td>
+<td>Country selected after server data is loaded; <code>null</code> leaves the default selection unchanged</td>
+</tr>
+</tbody>
+</table>
+<p><code>default_country</code> uses the full country name reported by VPNGate, for example:</p>
+<pre><code class="language-json">&quot;default_country&quot;: &quot;Japan&quot;
+</code></pre>
+<p>Set it to <code>null</code> to disable the default country.</p>
+<h2 id="hot-reload">Hot reload</h2>
+<p>Changes to the settings file are detected automatically.</p>
+<p>The following settings can be applied without restarting:</p>
+<ul>
+<li>themes;</li>
+<li>icon sizes and colors;</li>
+<li>tray icon appearance;</li>
+<li>spinner settings;</li>
+<li>table columns and sorting.</li>
+</ul>
+<p>Settings affecting application or VPN behavior are read by the relevant
+runtime component when they are used.</p>
+<h2 id="configuration-version">Configuration version</h2>
+<p>The <code>config_version</code> field identifies the settings schema version.</p>
+<pre><code class="language-json">&quot;config_version&quot;: 1
+</code></pre>
+<p>This value is reserved for future configuration migrations.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#theme" class="toc-level-2">`theme`</a>
+<a href="#icons" class="toc-level-2">`icons`</a>
+<a href="#iconssize" class="toc-level-3">`icons.size`</a>
+<a href="#iconscolor" class="toc-level-3">`icons.color`</a>
+<a href="#widgets" class="toc-level-2">`widgets`</a>
+<a href="#widgetsspinner" class="toc-level-3">`widgets.spinner`</a>
+<a href="#widgetstable" class="toc-level-3">`widgets.table`</a>
+<a href="#columns" class="toc-level-4">`columns`</a>
+<a href="#sort-by" class="toc-level-4">`sort_by`</a>
+<a href="#sort-order" class="toc-level-4">`sort_order`</a>
+<a href="#application" class="toc-level-2">`application`</a>
+<a href="#vpn" class="toc-level-2">`vpn`</a>
+<a href="#hot-reload" class="toc-level-2">Hot reload</a>
+<a href="#configuration-version" class="toc-level-2">Configuration version</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

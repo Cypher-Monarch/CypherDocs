@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Assumptions documentation for CypherGate.">
+  <title>Assumptions — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/" aria-current="page">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="architectural-assumptions">Architectural Assumptions</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p>This document records assumptions that are easy to lose during refactors.</p>
+<h2 id="daemon-assumptions">Daemon assumptions</h2>
+<ul>
+<li><code>cyphergated</code> is the authoritative owner of the VPN process.</li>
+<li>The daemon is expected to outlive the GUI.</li>
+<li>Daemon connection state is maintained in memory for the lifetime of the daemon process.</li>
+<li>When managed by systemd, the daemon and its OpenVPN child process share the same service control group. Terminating or restarting the daemon therefore terminates the active VPN connection through <code>KillMode=control-group</code>. Outside of systemd, terminating the daemon does not inherently terminate a reparented OpenVPN process.</li>
+</ul>
+<h2 id="gui-assumptions">GUI assumptions</h2>
+<ul>
+<li>The GUI is a client of the daemon rather than the owner of the VPN lifecycle.</li>
+<li>The GUI may disappear while the daemon continues running.</li>
+<li>A new GUI instance must synchronize itself from daemon state.</li>
+<li>GUI polling is currently used for state observation.</li>
+<li>User-facing application behavior is controlled by the per-user settings file where applicable.</li>
+<li>Configuration changes may be applied at runtime for settings explicitly supported by the configuration watcher.</li>
+</ul>
+<h2 id="ipc-assumptions">IPC assumptions</h2>
+<ul>
+<li>The Unix socket filesystem permissions provide the primary local access boundary.</li>
+<li>Clients that can access the socket are trusted to issue privileged commands.</li>
+<li>JSON messages are expected to remain small enough for the current fixed receive buffer.</li>
+<li>The current protocol is request/response oriented and does not provide event subscriptions.</li>
+</ul>
+<h2 id="configuration-assumptions">Configuration assumptions</h2>
+<ul>
+<li>User configuration is stored in <code>~/.config/cyphergate/settings.json</code>.</li>
+<li>Missing configuration values are populated from the application's defaults.</li>
+<li>A configuration value of <code>null</code> represents an intentionally unset value where supported by the setting.</li>
+<li>Builtin themes are resolved from the application's bundled theme directory.</li>
+<li>VPNGate-provided configurations are untrusted input.</li>
+<li>The GUI writes generated configurations to the user-side VPN directory before requesting a connection.</li>
+<li>The daemon reads the supplied configuration file once, validates the resulting contents, and stages the contents in its daemon-controlled runtime configuration before launching OpenVPN.</li>
+<li>The daemon does not pass the client-supplied configuration path directly to OpenVPN.</li>
+<li>The validator enforces a deliberately restricted OpenVPN feature set.</li>
+<li><code>script-security &gt; 0</code> is unsupported.</li>
+</ul>
+<h2 id="server-data-assumptions">Server data assumptions</h2>
+<ul>
+<li>VPNGate server metadata is provided as CSV data.</li>
+<li>Server rows contain a base64-encoded OpenVPN configuration.</li>
+<li>Server metadata includes country, ping, speed, user count, hostname, IP address, country code, and score.</li>
+<li>The GUI may use server metadata for filtering, sorting, presentation, and connection state.</li>
+<li>The configured default country is matched against the server's long country name.</li>
+</ul>
+<h2 id="network-assumptions">Network assumptions</h2>
+<ul>
+<li>DNS AAAA lookup is used as the IPv6 capability check.</li>
+<li>IPv6 is globally disabled through sysctl when the selected server does not appear to support IPv6.</li>
+</ul>
+<h2 id="future-changes">Future changes</h2>
+<p>When changing a component, update this document if the change invalidates an assumption.</p>
+<p>Architecture decisions should explain both the intended behavior and the reason the behavior is required.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#daemon-assumptions" class="toc-level-2">Daemon assumptions</a>
+<a href="#gui-assumptions" class="toc-level-2">GUI assumptions</a>
+<a href="#ipc-assumptions" class="toc-level-2">IPC assumptions</a>
+<a href="#configuration-assumptions" class="toc-level-2">Configuration assumptions</a>
+<a href="#server-data-assumptions" class="toc-level-2">Server data assumptions</a>
+<a href="#network-assumptions" class="toc-level-2">Network assumptions</a>
+<a href="#future-changes" class="toc-level-2">Future changes</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

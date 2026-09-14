@@ -1,0 +1,49 @@
+name: Build Documentation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out CypherDocs
+        uses: actions/checkout@v4
+
+      - name: Check out CypherGate documentation
+        uses: actions/checkout@v4
+        with:
+          repository: Cypher-Monarch/CypherGate
+          path: .cyphergate
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install Markdown
+
+      - name: Build documentation
+        run: |
+          python scripts/build_docs.py .cyphergate/docs
+
+      - name: Commit generated documentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No documentation changes to commit."
+            exit 0
+          fi
+
+          git add cyphergate/docs
+          git commit -m "docs: update generated documentation"
+          git push

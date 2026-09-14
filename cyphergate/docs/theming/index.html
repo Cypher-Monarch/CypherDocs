@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Theming documentation for CypherGate.">
+  <title>Theming — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/" aria-current="page">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="theming">Theming</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p>CypherGate uses Qt Style Sheets (QSS) for application theming.</p>
+<p>A theme is a <code>.qss</code> stylesheet that controls the visual appearance of the
+application's widgets.</p>
+<h2 id="theme-selection">Theme selection</h2>
+<p>Theme selection is configured through <code>settings.json</code>.</p>
+<h3 id="builtin-themes">Builtin themes</h3>
+<p>Builtin themes are stored in the application's theme directory.</p>
+<pre><code class="language-json">{
+  &quot;theme&quot;: {
+    &quot;mode&quot;: &quot;builtin&quot;,
+    &quot;name&quot;: &quot;playful&quot;,
+    &quot;path&quot;: null
+  }
+}
+</code></pre>
+<p>When <code>mode</code> is <code>builtin</code>, CypherGate loads:</p>
+<pre><code class="language-text">&lt;theme directory&gt;/&lt;name&gt;.qss
+</code></pre>
+<p>During development, builtin themes are loaded from the repository's <code>themes/</code>
+directory.</p>
+<p>Installed/frozen builds load builtin themes from:</p>
+<pre><code class="language-text">/usr/share/cyphergate/themes
+</code></pre>
+<h3 id="custom-themes">Custom themes</h3>
+<p>Custom themes can be loaded from an arbitrary <code>.qss</code> file:</p>
+<pre><code class="language-json">{
+  &quot;theme&quot;: {
+    &quot;mode&quot;: &quot;custom&quot;,
+    &quot;name&quot;: null,
+    &quot;path&quot;: &quot;/path/to/theme.qss&quot;
+  }
+}
+</code></pre>
+<p>When <code>mode</code> is <code>custom</code>, the configured <code>path</code> is used directly.</p>
+<p>If the resolved theme file does not exist, CypherGate uses its builtin fallback
+stylesheet instead.</p>
+<h2 id="qss">QSS</h2>
+<p>CypherGate themes use standard Qt Style Sheet syntax.</p>
+<p>A stylesheet can target widgets by their Qt class:</p>
+<pre><code class="language-qss">QPushButton {
+    background-color: #cba6f7;
+}
+</code></pre>
+<p>or by their CypherGate-specific <code>objectName</code>:</p>
+<pre><code class="language-qss">QPushButton#connectButton {
+    background-color: #a6e3a1;
+}
+</code></pre>
+<p>Object names allow individual widgets to be styled without affecting every
+widget of the same Qt class.</p>
+<h2 id="available-widgets">Available widgets</h2>
+<h3 id="main-window">Main window</h3>
+<table>
+<thead>
+<tr>
+<th>Object name</th>
+<th>Widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mainWindow</code></td>
+<td>Main application window</td>
+</tr>
+<tr>
+<td><code>titleBar</code></td>
+<td>Custom title bar</td>
+</tr>
+<tr>
+<td><code>titleLabel</code></td>
+<td>Window title</td>
+</tr>
+<tr>
+<td><code>headingLabel</code></td>
+<td>Main heading</td>
+</tr>
+</tbody>
+</table>
+<h3 id="window-controls">Window controls</h3>
+<table>
+<thead>
+<tr>
+<th>Object name</th>
+<th>Widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minimizeButton</code></td>
+<td>Minimize button</td>
+</tr>
+<tr>
+<td><code>closeButton</code></td>
+<td>Close button</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vpn-controls">VPN controls</h3>
+<table>
+<thead>
+<tr>
+<th>Object name</th>
+<th>Widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>refreshButton</code></td>
+<td>Refresh button</td>
+</tr>
+<tr>
+<td><code>connectButton</code></td>
+<td>Connect button</td>
+</tr>
+<tr>
+<td><code>disconnectButton</code></td>
+<td>Disconnect button</td>
+</tr>
+<tr>
+<td><code>autoConnectButton</code></td>
+<td>Auto-connect button</td>
+</tr>
+<tr>
+<td><code>cancelButton</code></td>
+<td>Cancel button</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-table">Server table</h3>
+<table>
+<thead>
+<tr>
+<th>Object name</th>
+<th>Widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>serverTable</code></td>
+<td>VPN server table</td>
+</tr>
+<tr>
+<td><code>animLabel</code></td>
+<td>Animated table cell label</td>
+</tr>
+</tbody>
+</table>
+<h3 id="country-selector">Country selector</h3>
+<table>
+<thead>
+<tr>
+<th>Object name</th>
+<th>Widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>countryDropdown</code></td>
+<td>Country selector</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-selectors">Common selectors</h2>
+<h3 id="buttons">Buttons</h3>
+<p>The global <code>QPushButton</code> selector can be used to style all buttons:</p>
+<pre><code class="language-qss">QPushButton {
+    background-color: #cba6f7;
+    color: #11111b;
+}
+</code></pre>
+<p>Individual buttons can be styled using their object names:</p>
+<pre><code class="language-qss">QPushButton#connectButton {
+    background-color: #a6e3a1;
+}
+</code></pre>
+<p>Button states can also be targeted:</p>
+<pre><code class="language-qss">QPushButton:hover {
+    background-color: #b4befe;
+}
+
+QPushButton:pressed {
+    background-color: #89b4fa;
+}
+
+QPushButton:disabled {
+    background-color: #45475a;
+}
+</code></pre>
+<h3 id="labels">Labels</h3>
+<p>Labels can be styled globally with <code>QLabel</code> or individually using their
+object names:</p>
+<pre><code class="language-qss">QLabel {
+    color: #cdd6f4;
+}
+
+QLabel#headingLabel {
+    font-size: 20px;
+}
+</code></pre>
+<h3 id="server-table-2">Server table</h3>
+<p>The server table can be customized using:</p>
+<pre><code class="language-qss">QTableWidget#serverTable
+QTableWidget#serverTable::item
+QTableWidget#serverTable::item:selected
+QHeaderView
+QHeaderView::section
+QTableCornerButton::section
+</code></pre>
+<p>These selectors can be used to customize the table background, cells,
+selection, headers, borders, and corner button.</p>
+<p>For example:</p>
+<pre><code class="language-qss">QTableWidget#serverTable {
+    background-color: #11111b;
+    border: 1px solid #313244;
+}
+
+QTableWidget#serverTable::item:selected {
+    background-color: #cba6f7;
+    color: #11111b;
+}
+
+QHeaderView::section {
+    background-color: #181825;
+}
+</code></pre>
+<h3 id="country-selector-2">Country selector</h3>
+<p>The country selector is a <code>QComboBox</code> with an explicit <code>QListView</code>
+popup.</p>
+<p>The combo box can be styled using:</p>
+<pre><code class="language-qss">QComboBox
+QComboBox:hover
+QComboBox:focus
+QComboBox::drop-down
+</code></pre>
+<p>The popup list can be styled using:</p>
+<pre><code class="language-qss">QListView
+QListView::item
+QListView::item:hover
+QListView::item:selected
+</code></pre>
+<p>CypherGate sets <code>combobox-popup: 0</code> on the country selector to use
+the standard list-view popup behavior.</p>
+<p>For example:</p>
+<pre><code class="language-qss">QComboBox {
+    combobox-popup: 0;
+
+    background-color: #181825;
+    color: #cdd6f4;
+    border: 1px solid #313244;
+}
+
+QListView {
+    background-color: #181825;
+    color: #cdd6f4;
+}
+
+QListView::item:selected {
+    background-color: #cba6f7;
+    color: #11111b;
+}
+</code></pre>
+<h3 id="scrollbars">Scrollbars</h3>
+<p>Vertical scrollbars can be styled using:</p>
+<pre><code class="language-qss">QScrollBar:vertical
+QScrollBar::handle:vertical
+QScrollBar::handle:vertical:hover
+</code></pre>
+<h3 id="tooltips">Tooltips</h3>
+<p>Tooltips can be styled globally:</p>
+<pre><code class="language-qss">QToolTip {
+    background-color: #181825;
+    color: #cdd6f4;
+}
+</code></pre>
+<h3 id="custom-fonts">Custom fonts</h3>
+<p>CypherGate supports custom fonts in <code>.ttf</code> and <code>.otf</code> formats.</p>
+<p>Bundled custom fonts are loaded from:</p>
+<p><code>Assets/fonts</code></p>
+<p>User-provided fonts may also be placed in:</p>
+<p><code>~/.config/cyphergate/fonts</code></p>
+<p>The user font directory is optional and is only scanned when it already exists. CypherGate does not create the directory automatically.</p>
+<p>For example:</p>
+<pre><code class="language-text">~/.config/cyphergate/fonts/
+├── Panchang-Regular.ttf
+└── Panchang-Bold.otf
+</code></pre>
+<p>A theme can then reference the loaded font by its family name:</p>
+<pre><code class="language-qss">QWidget {
+    font-family: &quot;Panchang&quot;;
+}
+</code></pre>
+<h2 id="states-and-pseudo-selectors">States and pseudo-selectors</h2>
+<p>Qt's standard pseudo-selectors can be used where supported by the target
+widget.</p>
+<p>Common examples include:</p>
+<ul>
+<li><code>:hover</code></li>
+<li><code>:pressed</code></li>
+<li><code>:disabled</code></li>
+<li><code>:selected</code></li>
+</ul>
+<p>For example:</p>
+<pre><code class="language-qss">QPushButton#connectButton:hover {
+    background-color: #b4befe;
+}
+</code></pre>
+<h2 id="hot-reload">Hot reload</h2>
+<p>CypherGate watches the active theme file for changes.</p>
+<p>When the active stylesheet changes, CypherGate reloads and reapplies the theme
+without requiring an application restart.</p>
+<p>Changing the selected theme through <code>settings.json</code> is also supported by the
+configuration watcher.</p>
+<p>Theme reloads are handled separately from the normal icon and widget
+configuration reloads.</p>
+<h2 id="fallback-behavior">Fallback behavior</h2>
+<p>If the resolved theme path does not exist, CypherGate does not fail to start
+because of the missing stylesheet. Instead, the builtin fallback stylesheet is
+used.</p>
+<p>This applies to both builtin themes whose files cannot be found and custom
+themes whose configured paths are invalid.</p>
+<h2 id="creating-a-custom-theme">Creating a custom theme</h2>
+<p>A custom theme only needs to be a valid Qt Style Sheet file.</p>
+<p>For example:</p>
+<pre><code class="language-qss">QWidget#mainWindow {
+    background-color: #101010;
+    color: #ffffff;
+}
+
+QPushButton {
+    background-color: #ffffff;
+    color: #101010;
+    border: none;
+    border-radius: 8px;
+}
+
+QPushButton:hover {
+    background-color: #cccccc;
+}
+
+QTableWidget#serverTable {
+    background-color: #101010;
+    border: 1px solid #444444;
+}
+
+QTableWidget#serverTable::item:selected {
+    background-color: #ffffff;
+    color: #101010;
+}
+</code></pre>
+<p>Save the stylesheet as a <code>.qss</code> file and point <code>theme.path</code> at it:</p>
+<p>The theme can then be edited while CypherGate is running and the changes will
+be picked up by the configuration watcher.</p>
+<h2 id="qt-style-sheets">Qt Style Sheets</h2>
+<p>CypherGate themes are regular QSS files rather than a separate CypherGate
+styling language. Standard Qt Style Sheet selectors and properties supported by
+the application's widgets can therefore be used.</p>
+<p>This document describes the CypherGate-specific widgets and selectors.
+For complete QSS syntax and property behavior, refer to the Qt Style Sheets
+documentation.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#theme-selection" class="toc-level-2">Theme selection</a>
+<a href="#builtin-themes" class="toc-level-3">Builtin themes</a>
+<a href="#custom-themes" class="toc-level-3">Custom themes</a>
+<a href="#qss" class="toc-level-2">QSS</a>
+<a href="#available-widgets" class="toc-level-2">Available widgets</a>
+<a href="#main-window" class="toc-level-3">Main window</a>
+<a href="#window-controls" class="toc-level-3">Window controls</a>
+<a href="#vpn-controls" class="toc-level-3">VPN controls</a>
+<a href="#server-table" class="toc-level-3">Server table</a>
+<a href="#country-selector" class="toc-level-3">Country selector</a>
+<a href="#common-selectors" class="toc-level-2">Common selectors</a>
+<a href="#buttons" class="toc-level-3">Buttons</a>
+<a href="#labels" class="toc-level-3">Labels</a>
+<a href="#server-table-2" class="toc-level-3">Server table</a>
+<a href="#country-selector-2" class="toc-level-3">Country selector</a>
+<a href="#scrollbars" class="toc-level-3">Scrollbars</a>
+<a href="#tooltips" class="toc-level-3">Tooltips</a>
+<a href="#custom-fonts" class="toc-level-3">Custom fonts</a>
+<a href="#states-and-pseudo-selectors" class="toc-level-2">States and pseudo-selectors</a>
+<a href="#hot-reload" class="toc-level-2">Hot reload</a>
+<a href="#fallback-behavior" class="toc-level-2">Fallback behavior</a>
+<a href="#creating-a-custom-theme" class="toc-level-2">Creating a custom theme</a>
+<a href="#qt-style-sheets" class="toc-level-2">Qt Style Sheets</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

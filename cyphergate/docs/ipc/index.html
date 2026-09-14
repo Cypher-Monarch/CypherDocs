@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="IPC documentation for CypherGate.">
+  <title>IPC — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/" aria-current="page">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="ipc-api">IPC API</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<h2 id="transport">Transport</h2>
+<p>CypherGate uses a Unix domain stream socket:</p>
+<pre><code class="language-text">/run/cyphergate/cyphergated.sock
+</code></pre>
+<p>The daemon creates the containing directory with mode <code>2750</code> and the socket with mode <code>0660</code>. The <code>cyphergate</code> group is used for access control.</p>
+<p>The client sends a single JSON object per connection.</p>
+<p>Current client-side requests are shaped as:</p>
+<pre><code class="language-json">{&quot;action&quot;: &quot;STATUS&quot;}
+</code></pre>
+<p>or:</p>
+<pre><code class="language-json">{
+  &quot;action&quot;: &quot;START_VPN&quot;,
+  &quot;config&quot;: &quot;/path/to/server.ovpn&quot;,
+  &quot;country&quot;: &quot;Japan&quot;,
+  &quot;country_short&quot;: &quot;JP&quot;,
+  &quot;hostname&quot;: &quot;vpn.example&quot;,
+  &quot;ip&quot;: &quot;203.0.113.10&quot;,
+  &quot;ping&quot;: &quot;42 ms&quot;,
+  &quot;speed&quot;: &quot;100000 kbps&quot;,
+  &quot;users&quot;: &quot;123&quot;,
+  &quot;score&quot;: 123456
+}
+</code></pre>
+<h2 id="actions">Actions</h2>
+<h3 id="status"><code>STATUS</code></h3>
+<p>Returns a JSON object containing the daemon's current state.</p>
+<p>Example shape:</p>
+<pre><code class="language-json">{
+  &quot;status&quot;: &quot;CONNECTED&quot;,
+  &quot;country&quot;: &quot;Japan&quot;,
+  &quot;country_short&quot;: &quot;JP&quot;,
+  &quot;hostname&quot;: &quot;vpn.example&quot;,
+  &quot;ip&quot;: &quot;203.0.113.10&quot;,
+  &quot;score&quot;: 123456,
+  &quot;ping&quot;: &quot;42 ms&quot;,
+  &quot;speed&quot;: &quot;100000 kbps&quot;,
+  &quot;users&quot;: &quot;123&quot;,
+  &quot;config&quot;: &quot;/run/cyphergate/config.ovpn&quot;,
+  &quot;log_file&quot;: &quot;/var/log/cyphergate/cyphergate_2026-08-26_140000.log&quot;,
+  &quot;started_at&quot;: 1756197000.0,
+  &quot;ipv6_disabled&quot;: false,
+  &quot;last_error&quot;: null
+}
+</code></pre>
+<p><em>The exact values are runtime-dependent.</em></p>
+<h3 id="start-vpn"><code>START_VPN</code></h3>
+<p>Requests that the daemon start an OpenVPN process using the supplied configuration.</p>
+<p>The <code>config</code> field is the path to the client-provided OpenVPN configuration. The daemon reads that file once, validates the resulting contents, and writes the validated contents to the daemon-controlled <code>/run/cyphergate/config.ovpn</code>. OpenVPN is then launched using that runtime copy rather than reopening the client-supplied path.</p>
+<p>The request may include:</p>
+<ul>
+<li><code>config</code></li>
+<li><code>country</code></li>
+<li><code>country_short</code></li>
+<li><code>hostname</code></li>
+<li><code>ip</code></li>
+<li><code>ping</code></li>
+<li><code>speed</code></li>
+<li><code>users</code></li>
+<li><code>score</code></li>
+</ul>
+<p>The daemon stores the connection metadata in its in-memory state. The active <code>config</code> value reported by <code>STATUS</code> refers to the daemon-controlled runtime configuration.</p>
+<h3 id="stop-vpn"><code>STOP_VPN</code></h3>
+<p>Terminates the current OpenVPN process, removes the daemon-controlled runtime configuration, closes its log, stops monitoring, and resets connection state.</p>
+<h3 id="disable-ipv6"><code>DISABLE_IPV6</code></h3>
+<p>Runs the system IPv6 disable sysctl and records <code>ipv6_disabled = true</code>.</p>
+<h3 id="enable-ipv6"><code>ENABLE_IPV6</code></h3>
+<p>Runs the corresponding sysctl to re-enable IPv6 and records <code>ipv6_disabled = false</code>.</p>
+<h2 id="authorization-model">Authorization model</h2>
+<p>IPC access is controlled at the filesystem level by ownership and mode of the Unix socket and its parent directory.</p>
+<p>The daemon currently does not implement a separate application-level authentication or authorization protocol inside the JSON messages.</p>
+<p>Therefore, membership/access to the <code>cyphergate</code> group is part of the trusted boundary.</p>
+<h2 id="protocol-limitations">Protocol limitations</h2>
+<p>The current daemon accepts JSON from a connected client and dispatches directly on <code>action</code>.</p>
+<p>There is currently no documented protocol version field, request ID, subscription mechanism, or structured error response.</p>
+<p>These are potential future API improvements and should be treated as compatibility work before external clients depend heavily on the protocol.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#transport" class="toc-level-2">Transport</a>
+<a href="#actions" class="toc-level-2">Actions</a>
+<a href="#status" class="toc-level-3">`STATUS`</a>
+<a href="#start-vpn" class="toc-level-3">`START_VPN`</a>
+<a href="#stop-vpn" class="toc-level-3">`STOP_VPN`</a>
+<a href="#disable-ipv6" class="toc-level-3">`DISABLE_IPV6`</a>
+<a href="#enable-ipv6" class="toc-level-3">`ENABLE_IPV6`</a>
+<a href="#authorization-model" class="toc-level-2">Authorization model</a>
+<a href="#protocol-limitations" class="toc-level-2">Protocol limitations</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

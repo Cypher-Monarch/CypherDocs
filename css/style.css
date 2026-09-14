@@ -53,13 +53,13 @@ strong {
 /* Main Layout               */
 /* ========================= */
 
-#content {
+.project-main {
     width: min(1100px, 90%);
     margin: 0 auto;
     padding: 4rem 0;
 }
 
-section {
+.project-main section {
     margin-bottom: 8rem;
 }
 
@@ -195,10 +195,17 @@ section {
 /* ========================= */
 
 #project-links {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
     margin-top: 1.5rem;
 }
 
 #project-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--text-muted);
     text-decoration: none;
 
@@ -593,11 +600,369 @@ code {
     color: var(--gold);
 }
 
+/* ========================================
+   Documentation Layout
+   ======================================== */
+
+.docs-layout {
+    width: min(1400px, 94%);
+    margin: 0 auto;
+    padding: 3rem 0 5rem;
+
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 200px;
+    gap: 3rem;
+}
+
+/* ========================= */
+/* Documentation Sidebar     */
+/* ========================= */
+
+.docs-sidebar,
+.docs-toc {
+    position: sticky;
+    top: 5.5rem;
+    align-self: start;
+    min-width: 0;
+}
+
+.docs-sidebar h2,
+.docs-toc h2 {
+    margin: 0 0 1rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.docs-sidebar a,
+.docs-toc a {
+    display: block;
+
+    padding: 0.35rem 0;
+
+    color: var(--text-muted);
+    text-decoration: none;
+
+    transition: var(--transition);
+}
+
+.docs-sidebar a:hover,
+.docs-toc a:hover {
+    color: var(--gold);
+}
+
+.docs-sidebar a[aria-current="page"] {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+/* ========================= */
+/* Documentation Content     */
+/* ========================= */
+
+.docs-layout > main {
+    min-width: 0;
+}
+
+/*
+ * The documentation template puts the project label
+ * before the generated Markdown content.
+ */
+
+.docs-eyebrow {
+    margin: 0 0 0.5rem;
+
+    color: var(--gold);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.docs-layout > main h1 {
+    margin: 0;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+}
+
+.docs-updated {
+    margin: 0.75rem 0 3rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+}
+
+/* ========================= */
+/* Documentation Headings    */
+/* ========================= */
+
+.docs-layout > main h2 {
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.5rem;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 1.5rem;
+    line-height: 1.25;
+}
+
+.docs-layout > main h3 {
+    margin: 2rem 0 0.75rem;
+
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.docs-layout > main h4 {
+    margin: 1.5rem 0 0.6rem;
+
+    font-size: 1rem;
+}
+
+/* ========================= */
+/* Documentation Text        */
+/* ========================= */
+
+.docs-layout > main p {
+    margin: 0 0 1rem;
+    line-height: 1.8;
+}
+
+.docs-layout > main ul,
+.docs-layout > main ol {
+    margin: 0 0 1.25rem;
+    padding-left: 1.5rem;
+
+    line-height: 1.8;
+}
+
+.docs-layout > main li + li {
+    margin-top: 0.35rem;
+}
+
+/* ========================= */
+/* Documentation Code        */
+/* ========================= */
+
+/*
+ * These rules intentionally live under .docs-layout.
+ * They override the site's existing global code styling
+ * without changing project pages.
+ */
+
+.docs-layout > main code {
+    display: inline;
+
+    padding: 0.15em 0.35em;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+
+    color: var(--gold);
+
+    font-family: inherit;
+    font-size: 0.9em;
+}
+
+.docs-layout > main pre {
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.4rem;
+
+    max-width: 100%;
+    overflow-x: auto;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    line-height: 1.65;
+}
+
+.docs-layout > main pre code {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+
+    color: var(--gold);
+
+    font-size: 0.85rem;
+    white-space: pre;
+}
+
+/* ========================= */
+/* Documentation Blockquotes */
+/* ========================= */
+
+.docs-layout > main blockquote {
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
+    border-left: 3px solid var(--gold);
+
+    background: var(--surface);
+
+    color: var(--text-muted);
+}
+
+.docs-layout > main blockquote p {
+    margin: 0;
+}
+
+/* ========================= */
+/* Documentation Tables      */
+/* ========================= */
+
+.docs-layout > main table {
+    width: 100%;
+    margin: 1.5rem 0 2rem;
+
+    border-collapse: collapse;
+
+    font-size: 0.9rem;
+}
+
+.docs-layout > main th,
+.docs-layout > main td {
+    padding: 0.75rem 0.9rem;
+
+    border: 1px solid var(--border);
+
+    text-align: left;
+    vertical-align: top;
+}
+
+.docs-layout > main th {
+    background: var(--surface);
+    font-weight: 650;
+}
+
+/* ========================= */
+/* Documentation Links       */
+/* ========================= */
+
+.docs-layout > main a {
+    color: var(--gold);
+
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}
+
+.docs-layout > main a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.docs-layout:has(#documentation) .docs-updated {
+    text-align: center;
+}
+
+/* ========================= */
+/* Documentation Header       */
+/* ========================= */
+
+.docs-layout > main > .docs-eyebrow {
+    margin: 0 0 0.75rem;
+
+    color: var(--gold);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.docs-layout > main > h1 {
+    margin: 0;
+
+    color: var(--gold);
+
+    align-content: center;
+
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.docs-layout > main > h1 + p {
+    margin: 1rem 0 3.5rem;
+
+    color: var(--text-muted);
+
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.docs-layout > main > .docs-eyebrow,
+.docs-layout > main > h1,
+.docs-layout > main > h1 + p {
+    text-align: center;
+}
+
+/* ========================= */
+/* Documentation TOC         */
+/* ========================= */
+
+.docs-toc .toc-level-3 {
+    padding-left: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.docs-toc .toc-level-4 {
+    padding-left: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.docs-toc .toc-level-5,
+.docs-toc .toc-level-6 {
+    padding-left: 2.25rem;
+    font-size: 0.8rem;
+}
+
+/* ========================= */
+/* Desktop Navigation        */
+/* ========================= */
+
+.docs-sidebar summary,
+.docs-toc summary {
+    display: none;
+}
+
+.docs-sidebar .nav-content,
+.docs-toc .nav-content {
+    display: block;
+}
+
 /* ========================= */
 /* Mobile                    */
 /* ========================= */
 
 @media (max-width: 768px) {
+
+    .docs-layout:has(#documentation) {
+        min-height: calc(100vh - 4.5rem);
+        padding-top: 2rem;
+        padding-bottom: 6rem;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .docs-layout:has(#documentation) > main {
+        margin-top: 0;
+    }
     #features-grid-big {
         grid-template-columns: 1fr;
     }
@@ -612,6 +977,11 @@ code {
 
     #install-tabs {
         flex-wrap: wrap;
+    }
+
+    .project-main {
+        width: min(100% - 2rem, 700px);
+        padding: 2rem 0;
     }
 
     section {
@@ -658,5 +1028,101 @@ code {
         width: 100%;
         padding: 0.75rem 0.9rem;
         border-radius: 10px;
+    }
+
+    /* Documentation */
+
+    .docs-layout {
+        width: min(100% - 2rem, 700px);
+        padding: 1.5rem 0 3rem;
+
+        display: block;
+    }
+
+    .docs-sidebar {
+        position: fixed;
+        top: 4.5rem;
+        left: 1rem;
+        right: 1rem;
+        margin: 0;
+        z-index: 90;
+    }
+
+    .docs-toc {
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        bottom: 1rem;
+        margin: 0;
+        z-index: 90;
+    }
+
+    .docs-sidebar details,
+    .docs-toc details {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+
+        background: var(--surface);
+    }
+    .docs-toc details {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+
+    .docs-sidebar summary,
+    .docs-toc summary {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+
+        padding: 0.8rem 1rem;
+
+        cursor: pointer;
+
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    .docs-sidebar summary svg,
+    .docs-toc summary svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .docs-sidebar .nav-content,
+    .docs-toc .nav-content {
+        display: block;
+
+        padding: 0.5rem 1rem 1rem;
+    }
+
+    .docs-sidebar h2,
+    .docs-toc h2 {
+        margin-bottom: 0.5rem;
+    }
+
+    .docs-layout > main {
+        margin-top: 1.5rem;
+    }
+
+    .docs-layout > main h1 {
+        font-size: 2rem;
+    }
+
+    .docs-layout > main h2 {
+        margin-top: 2.5rem;
+        font-size: 1.35rem;
+    }
+
+    .docs-layout > main pre {
+        max-width: 100%;
+    }
+
+    .docs-layout > main table {
+        display: block;
+        overflow-x: auto;
     }
 }

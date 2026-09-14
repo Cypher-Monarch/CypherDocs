@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Codebase documentation for CypherGate.">
+  <title>Codebase — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/" aria-current="page">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="codebase-guide">Codebase Guide</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<h2 id="repository-layout">Repository layout</h2>
+<pre><code class="language-text">src
+├── config
+│   ├── defaults.py
+│   ├── fallback_theme.py
+│   ├── manager.py
+│   ├── theme.py
+│   └── watcher.py
+├── daemon
+│   ├── commands.py
+│   ├── logging.py
+│   ├── monitor.py
+│   ├── setup.py
+│   ├── state.py
+│   └── validator.py
+├── ui
+│   ├── animations.py
+│   ├── events.py
+│   ├── fonts.py
+│   ├── icons.py
+│   ├── layout.py
+│   ├── main_window.py
+│   ├── spinner.py
+│   ├── status.py
+│   ├── tray.py
+│   ├── widgets.py
+│   └── window.py
+├── vpn
+│   ├── connector.py
+│   └── loader.py
+├── constants.py
+├── cyphergated.py
+├── cyphergate.py
+├── ipc.py
+├── permissions.py
+├── requirements.txt
+└── update.py
+</code></pre>
+<h2 id="execution-flow">Execution flow</h2>
+<h3 id="gui-startup">GUI startup</h3>
+<ol>
+<li><code>cyphergate.py</code> creates <code>QApplication</code>.</li>
+<li><code>CypherGate</code> initializes the window.</li>
+<li>Configuration is loaded and validated.</li>
+<li>Widgets, layout, signals, tray icon, and update checking are configured.</li>
+<li>The GUI checks local permissions.</li>
+<li>The GUI asynchronously ensures that the daemon socket is available.</li>
+<li>The VPNGate server list is fetched; the local cache is used if the request fails.</li>
+<li>Server data is parsed and displayed according to the configured table layout.</li>
+<li>Current daemon state is queried and applied to the UI.</li>
+</ol>
+<h3 id="connecting">Connecting</h3>
+<p>The GUI:</p>
+<ol>
+<li>gets the selected server;</li>
+<li>prepares the OpenVPN configuration;</li>
+<li>checks whether the endpoint supports IPv6;</li>
+<li>disables IPv6 through the daemon when necessary;</li>
+<li>writes the generated <code>.ovpn</code> file;</li>
+<li>sends <code>START_VPN</code> with the configuration path and server metadata;</li>
+<li>polls daemon status until the connection reaches a terminal state.</li>
+</ol>
+<p>The daemon:</p>
+<ol>
+<li>reads the supplied configuration file once;</li>
+<li>validates the resulting configuration contents;</li>
+<li>writes the validated contents to <code>/run/cyphergate/config.ovpn</code>;</li>
+<li>creates a session log;</li>
+<li>records connection metadata in global state;</li>
+<li>starts <code>/usr/bin/openvpn --config /run/cyphergate/config.ovpn</code>;</li>
+<li>starts the connection monitor.</li>
+</ol>
+<h3 id="successful-connection">Successful connection</h3>
+<p>The monitor looks for OpenVPN's <code>Initialization Sequence Completed</code> marker in the session log. Once found, daemon state becomes <code>CONNECTED</code>.</p>
+<p>The GUI sees the state transition, synchronizes its widgets, and shows connection information including the country, server IP, ping, speed, and users. If a new GUI instance starts while the daemon is already <code>CONNECTED</code>, it can show the same connection information from the existing daemon state.</p>
+<h3 id="disconnecting">Disconnecting</h3>
+<p>The GUI sends <code>STOP_VPN</code> and then <code>ENABLE_IPV6</code>.</p>
+<p>The daemon terminates OpenVPN, removes <code>/run/cyphergate/config.ovpn</code>, closes the log handle, stops the monitor, and resets connection state.</p>
+<h2 id="server-data">Server data</h2>
+<p>The application consumes the VPNGate iPhone API URL configured in <code>constants.py</code>.</p>
+<p>Server rows are parsed from CSV. The relevant fields are converted into:</p>
+<pre><code class="language-text">(
+    country,
+    ping,
+    speed,
+    users,
+    hostname,
+    ip,
+    country_short,
+    score,
+    config_base64,
+)
+</code></pre>
+<p>The server metadata is retained independently of the table presentation. The table configuration determines which fields are displayed and their order.</p>
+<p>Servers can be filtered by country and sorted using a configurable field and sort order. Values such as ping and speed are parsed specially so that missing or non-numeric values can be sorted safely.</p>
+<p>The optional country allowlist is read from <code>countries.conf</code>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Application settings are stored in:</p>
+<pre><code class="language-text">~/.config/cyphergate/settings.json
+</code></pre>
+<p>The configuration is divided into several sections:</p>
+<ul>
+<li><code>theme</code>: builtin or custom theme selection;</li>
+<li><code>icons</code>: icon sizes and colors;</li>
+<li><code>widgets</code>: widget-specific settings such as spinner appearance and animation;</li>
+<li><code>application</code>: application behavior such as tray minimization, notifications, and status polling;</li>
+<li><code>vpn</code>: connection timeout and default country;</li>
+<li><code>table</code>: displayed server columns and sorting configuration.</li>
+</ul>
+<p><code>config/manager.py</code> loads settings, merges missing values from the defaults, validates their types, and writes the resulting configuration when necessary.</p>
+<p><code>config/theme.py</code> resolves builtin and custom theme paths and loads the selected stylesheet.</p>
+<p><code>config/watcher.py</code> monitors the settings file and the currently selected theme file. Changes to configuration are applied without restarting the application where supported.</p>
+<h3 id="hot-reloadable-settings">Hot-reloadable settings</h3>
+<p>Configuration changes can update:</p>
+<ul>
+<li>application icons and their sizes/colors;</li>
+<li>system tray action icons;</li>
+<li>spinner size, color, thickness, FPS, and rotation speed;</li>
+<li>the active theme;</li>
+<li>server table columns;</li>
+<li>server table sorting.</li>
+</ul>
+<p>Settings that affect application lifecycle or VPN behavior are applied according to their respective runtime usage rather than being treated as generic UI hot-reload properties.</p>
+<h2 id="configuration-preparation">Configuration preparation</h2>
+<p><code>vpn.connector.prepare_connection()</code>:</p>
+<ul>
+<li>decodes the server's base64 OpenVPN configuration;</li>
+<li>adds <code>data-ciphers</code> when absent;</li>
+<li>adds <code>cipher</code> when absent;</li>
+<li>extracts the remote host;</li>
+<li>checks for an AAAA record;</li>
+<li>adds IPv6-related directives when the server supports IPv6;</li>
+<li>otherwise asks the caller to disable IPv6.</li>
+</ul>
+<p>The prepared configuration is written to the configured VPN directory.</p>
+<h2 id="ui-responsibilities">UI responsibilities</h2>
+<p>The UI modules are deliberately small:</p>
+<ul>
+<li><code>widgets.py</code>: widget creation and signal wiring;</li>
+<li><code>layout.py</code>: widget arrangement;</li>
+<li><code>window.py</code>: window styling;</li>
+<li><code>status.py</code>: state-to-widget mapping;</li>
+<li><code>tray.py</code>: system tray integration;</li>
+<li><code>animations.py</code>: visual transitions;</li>
+<li><code>events.py</code>: window interaction events;</li>
+<li><code>icons.py</code>: SVG icon rendering/cache and icon application;</li>
+<li><code>spinner.py</code>: connection spinner and spinner configuration.</li>
+<li><code>fonts.py</code>: load custom fonts for themes using said fonts.</li>
+</ul>
+<p>The <code>config</code> package owns settings loading, defaults, theme resolution, and configuration watching.</p>
+<p>The main application class remains the coordinator for VPN workflows rather than putting all implementation details into one file.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#repository-layout" class="toc-level-2">Repository layout</a>
+<a href="#execution-flow" class="toc-level-2">Execution flow</a>
+<a href="#gui-startup" class="toc-level-3">GUI startup</a>
+<a href="#connecting" class="toc-level-3">Connecting</a>
+<a href="#successful-connection" class="toc-level-3">Successful connection</a>
+<a href="#disconnecting" class="toc-level-3">Disconnecting</a>
+<a href="#server-data" class="toc-level-2">Server data</a>
+<a href="#configuration" class="toc-level-2">Configuration</a>
+<a href="#hot-reloadable-settings" class="toc-level-3">Hot-reloadable settings</a>
+<a href="#configuration-preparation" class="toc-level-2">Configuration preparation</a>
+<a href="#ui-responsibilities" class="toc-level-2">UI responsibilities</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

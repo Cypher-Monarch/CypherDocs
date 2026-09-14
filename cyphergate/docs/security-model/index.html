@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Security Model documentation for CypherGate.">
+  <title>Security Model — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/" aria-current="page">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="security-model">Security Model</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<h2 id="trust-boundaries">Trust boundaries</h2>
+<p>CypherGate has two major local trust domains:</p>
+<pre><code class="language-text">unprivileged GUI / local client
+            │
+            │ Unix socket
+            ▼
+     privileged daemon
+            │
+            ├── OpenVPN
+            ├── log files
+            └── system controls
+</code></pre>
+<p>The daemon performs operations that require elevated privileges. The GUI communicates with it instead of directly invoking privileged VPN operations.</p>
+<h2 id="unix-socket-protection">Unix socket protection</h2>
+<p>The daemon creates:</p>
+<pre><code class="language-text">/run/cyphergate/
+</code></pre>
+<p>with mode <code>2750</code>, owned by root and the <code>cyphergate</code> group.</p>
+<p>The socket:</p>
+<pre><code class="language-text">/run/cyphergate/cyphergated.sock
+</code></pre>
+<p>is created with mode <code>0660</code>, also owned by root and the <code>cyphergate</code> group. The setgid bit on the runtime directory causes files created within it to inherit the <code>cyphergate</code> group.</p>
+<p>This replaced the earlier world-accessible <code>/tmp</code> socket design.</p>
+<h2 id="openvpn-configuration-policy">OpenVPN configuration policy</h2>
+<p>The daemon reads the client-supplied configuration file once and validates the resulting contents before launching OpenVPN. It then writes those contents to the daemon-controlled <code>/run/cyphergate/config.ovpn</code> and launches OpenVPN against that copy. The client-supplied path is therefore not reopened between validation and use.</p>
+<p>This read-once and stage-to-runtime flow prevents a client from replacing the configuration file after validation but before OpenVPN opens it (a time-of-check/time-of-use race).</p>
+<p>The validator rejects directives considered capable of executing or loading external behavior, including:</p>
+<ul>
+<li><code>up</code></li>
+<li><code>down</code></li>
+<li><code>route-up</code></li>
+<li><code>route-pre-down</code></li>
+<li><code>ipchange</code></li>
+<li><code>client-connect</code></li>
+<li><code>client-disconnect</code></li>
+<li><code>learn-address</code></li>
+<li><code>plugin</code></li>
+<li><code>tls-verify</code></li>
+<li><code>auth-user-pass-verify</code></li>
+<li><code>config</code></li>
+</ul>
+<p>The validator also requires <code>script-security 0</code>. Any parsed value greater than zero is rejected.</p>
+<p>The validator is intentionally policy-oriented rather than a complete OpenVPN configuration parser.</p>
+<h2 id="logs">Logs</h2>
+<p>Each VPN session gets a daemon-created log under the configured log directory.</p>
+<p>The daemon opens the log for OpenVPN stdout/stderr and keeps the handle in daemon state.</p>
+<h2 id="security-assumptions">Security assumptions</h2>
+<p>The current architecture assumes:</p>
+<ol>
+<li>membership in the <code>cyphergate</code> group is trusted for access to privileged IPC operations;</li>
+<li>the daemon executable and its runtime directories are protected by the operating system's normal filesystem permissions;</li>
+<li>OpenVPN is the intended privileged VPN executable;</li>
+<li>the daemon's configuration-validation policy is sufficient for the supported OpenVPN configuration subset;</li>
+<li>the daemon's in-memory state is authoritative only while that daemon process is alive.</li>
+</ol>
+<p>These assumptions should be revisited as the project gains additional clients and features.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#trust-boundaries" class="toc-level-2">Trust boundaries</a>
+<a href="#unix-socket-protection" class="toc-level-2">Unix socket protection</a>
+<a href="#openvpn-configuration-policy" class="toc-level-2">OpenVPN configuration policy</a>
+<a href="#logs" class="toc-level-2">Logs</a>
+<a href="#security-assumptions" class="toc-level-2">Security assumptions</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>

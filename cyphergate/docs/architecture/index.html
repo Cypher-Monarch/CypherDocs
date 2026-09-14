@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Architecture documentation for CypherGate.">
+  <title>Architecture — CypherGate — CypherDocs</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+  <header id="site-header">
+    <div id="header-inner">
+      <a id="site-logo" href="../../">CypherDocs</a>
+
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="../../../">Home</a>
+        <a href="../../">CypherGate</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <details>
+        <summary class="mobile-control"><i data-lucide="book-open"></i> Documentation</summary>
+
+        <div class="nav-content">
+          <h2>CypherGate</h2>
+          <a href="../">Overview</a>
+          <a href="../architecture/" aria-current="page">Architecture</a>
+          <a href="../assumptions/">Assumptions</a>
+          <a href="../codebase/">Codebase</a>
+          <a href="../ipc/">IPC</a>
+          <a href="../security-model/">Security Model</a>
+          <a href="../settings/">Settings</a>
+          <a href="../theming/">Theming</a>
+        </div>
+      </details>
+    </aside>
+
+    <main>
+      <p class="docs-eyebrow">CypherGate</p>
+
+<h1 id="cyphergate-architecture">CypherGate Architecture</h1>
+<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<blockquote>
+<p>Current implementation: v2.1.0 (Linux)</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>CypherGate is split into an unprivileged Qt GUI and a privileged daemon.</p>
+<p>The GUI is responsible for presentation, server discovery, configuration management, VPN configuration preparation, and user interaction. The daemon owns the VPN process and the authoritative connection state.</p>
+<pre><code class="language-text">                    ┌─────────────────────┐
+                    │   CypherGate GUI    │
+                    │     (PySide6)       │
+                    └──────────┬──────────┘
+                               │ Unix socket / JSON
+                               ▼
+                    ┌─────────────────────┐
+                    │    cyphergated      │
+                    │  privileged daemon  │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────┴──────────┐
+                    ▼                     ▼
+               OpenVPN process       system controls
+                                      (IPv6 sysctl)
+</code></pre>
+<p>The daemon is intentionally persistent relative to the GUI. A GUI restart does not inherently terminate an existing VPN process; a newly launched GUI can query daemon state and synchronize its UI from that state.</p>
+<h2 id="components">Components</h2>
+<h3 id="gui-entry-point">GUI entry point</h3>
+<p><code>cyphergate.py</code> creates the Qt application and the <code>CypherGate</code> main window.</p>
+<h3 id="main-window">Main window</h3>
+<p><code>ui/main_window.py</code> coordinates the GUI lifecycle and user-facing VPN operations.</p>
+<p>It:</p>
+<ul>
+<li>fetches and caches the VPNGate server list;</li>
+<li>filters servers by country;</li>
+<li>sorts servers according to the configured table settings;</li>
+<li>prepares <code>.ovpn</code> configuration data;</li>
+<li>writes the generated configuration to the user-side VPN directory;</li>
+<li>requests privileged operations through the IPC layer;</li>
+<li>polls daemon state;</li>
+<li>synchronizes widgets from daemon state;</li>
+<li>applies user configuration to the GUI;</li>
+<li>displays connection/disconnection notifications.</li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p>The <code>config/</code> package manages application configuration and theme selection.</p>
+<p>It:</p>
+<ul>
+<li>loads and validates <code>settings.json</code>;</li>
+<li>merges missing configuration values from the defaults;</li>
+<li>resolves builtin and custom themes;</li>
+<li>provides configuration-specific helpers;</li>
+<li>watches the settings and active theme files for changes.</li>
+</ul>
+<p>Configuration is stored per-user under <code>~/.config/cyphergate/settings.json</code>.</p>
+<p>Settings cover theme selection, icon appearance, spinner behavior, application behavior, VPN defaults, and server-table presentation.</p>
+<h3 id="ipc-client">IPC client</h3>
+<p><code>ipc.py</code> provides the GUI-side Unix-socket client.</p>
+<p>It can:</p>
+<ul>
+<li>start the privileged daemon through <code>pkexec</code> when the socket is absent;</li>
+<li>connect to <code>/run/cyphergate/cyphergated.sock</code>;</li>
+<li>send JSON commands;</li>
+<li>receive and decode JSON status responses.</li>
+</ul>
+<h3 id="daemon">Daemon</h3>
+<p><code>cyphergated.py</code> owns the Unix socket server and dispatches commands to <code>daemon.commands</code>.</p>
+<p>The daemon is long-lived and keeps connection state in <code>daemon.state</code>. When starting a VPN, it reads the client-supplied configuration once, validates the resulting contents, and stages those contents in the daemon-controlled <code>/run/cyphergate/config.ovpn</code> before launching OpenVPN.</p>
+<h3 id="daemon-command-layer">Daemon command layer</h3>
+<p><code>daemon/commands.py</code> performs privileged operations:</p>
+<ul>
+<li>starting OpenVPN;</li>
+<li>stopping OpenVPN;</li>
+<li>disabling/enabling IPv6;</li>
+<li>returning the current connection state.</li>
+</ul>
+<h3 id="state">State</h3>
+<p><code>daemon/state.py</code> contains the daemon's in-memory authoritative state.</p>
+<p>The state includes:</p>
+<ul>
+<li>connection status;</li>
+<li>OpenVPN process handle;</li>
+<li>selected country;</li>
+<li>selected server metadata, including country code, hostname, IP, score, ping, speed, and user count;</li>
+<li>configuration path;</li>
+<li>log path and handle;</li>
+<li>connection start time;</li>
+<li>IPv6-disabled state;</li>
+<li>last error;</li>
+<li>monitoring thread/event.</li>
+</ul>
+<h3 id="connection-monitor">Connection monitor</h3>
+<p><code>daemon/monitor.py</code> runs in a daemon thread while a VPN connection is active.</p>
+<p>It detects:</p>
+<ul>
+<li>unexpected OpenVPN exit;</li>
+<li>successful OpenVPN initialization by looking for <code>Initialization Sequence Completed</code> in the session log.</li>
+</ul>
+<h3 id="configuration-validator">Configuration validator</h3>
+<p><code>daemon/validator.py</code> validates OpenVPN configuration contents before the daemon launches OpenVPN. The daemon reads the client-supplied file once and passes the resulting contents to the validator rather than validating a path and later reopening that path.</p>
+<p>It rejects configured dangerous directives and rejects any <code>script-security</code> value greater than zero.</p>
+<h3 id="vpn-data-layer">VPN data layer</h3>
+<p><code>vpn/loader.py</code> parses VPNGate CSV data and applies the local country allowlist. It retains server metadata used for filtering, sorting, table presentation, and connection state.</p>
+<p><code>vpn/connector.py</code> prepares a server configuration, adds cipher settings when absent, detects IPv6 support, and writes the resulting configuration file.</p>
+<h2 id="state-ownership">State ownership</h2>
+<p>The daemon is the source of truth for VPN lifecycle state.</p>
+<p>The GUI does not need to keep the VPN process alive. Instead, it asks the daemon for state and maps that state to UI state.</p>
+<p>The UI synchronization rules are centralized in <code>ui/status.py</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Daemon state</th>
+<th>GUI behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DISCONNECTED</code></td>
+<td>Connect/refresh/auto-connect enabled</td>
+</tr>
+<tr>
+<td><code>CONNECTING</code></td>
+<td>Spinner and cancel state shown</td>
+</tr>
+<tr>
+<td><code>CONNECTED</code></td>
+<td>Connected country shown; disconnect enabled</td>
+</tr>
+<tr>
+<td><code>ERROR</code></td>
+<td>Error state shown and connection controls restored</td>
+</tr>
+</tbody>
+</table>
+<p>This separation is what allows a fresh GUI process to reconstruct the state of an already-running daemon connection. If the daemon is already <code>CONNECTED</code> when a new GUI instance starts, the GUI can display the existing connection information without waiting for a new connection transition.</p>
+<h2 id="design-intent">Design intent</h2>
+<p>The architecture deliberately separates:</p>
+<ol>
+<li>user interface lifecycle;</li>
+<li>privileged VPN lifecycle;</li>
+<li>authoritative connection state;</li>
+<li>VPN server data processing;</li>
+<li>user configuration and presentation preferences.</li>
+</ol>
+<p>The GUI remains responsible for presentation and configuration while the daemon remains responsible for privileged VPN lifecycle and authoritative state.</p>
+<p>This makes the daemon independently useful to other clients. The current IPC protocol is already sufficient for small external clients such as shell status/uptime/toggle helpers.</p>
+    </main>
+
+    <aside class="docs-toc">
+      <details>
+        <summary class="mobile-control"><i data-lucide="list"></i> On this page</summary>
+
+        <div class="nav-content">
+          <h2>On this page</h2>
+<a href="#overview" class="toc-level-2">Overview</a>
+<a href="#components" class="toc-level-2">Components</a>
+<a href="#gui-entry-point" class="toc-level-3">GUI entry point</a>
+<a href="#main-window" class="toc-level-3">Main window</a>
+<a href="#configuration" class="toc-level-3">Configuration</a>
+<a href="#ipc-client" class="toc-level-3">IPC client</a>
+<a href="#daemon" class="toc-level-3">Daemon</a>
+<a href="#daemon-command-layer" class="toc-level-3">Daemon command layer</a>
+<a href="#state" class="toc-level-3">State</a>
+<a href="#connection-monitor" class="toc-level-3">Connection monitor</a>
+<a href="#configuration-validator" class="toc-level-3">Configuration validator</a>
+<a href="#vpn-data-layer" class="toc-level-3">VPN data layer</a>
+<a href="#state-ownership" class="toc-level-2">State ownership</a>
+<a href="#design-intent" class="toc-level-2">Design intent</a>
+        </div>
+      </details>
+    </aside>
+
+  </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../../../js/script.js" defer></script>
+</body>
+</html>
