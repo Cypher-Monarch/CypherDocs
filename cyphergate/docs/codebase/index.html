@@ -44,7 +44,7 @@
       <p class="docs-eyebrow">CypherGate</p>
 
 <h1 id="codebase-guide">Codebase Guide</h1>
-<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p class="docs-updated">Updated <time datetime="2026-10-06">October 6, 2026</time></p>
 <h2 id="repository-layout">Repository layout</h2>
 <pre><code class="language-text">src
 ├── config
@@ -105,7 +105,7 @@
 <li>disables IPv6 through the daemon when necessary;</li>
 <li>writes the generated <code>.ovpn</code> file;</li>
 <li>sends <code>START_VPN</code> with the configuration path and server metadata;</li>
-<li>polls daemon status until the connection reaches a terminal state.</li>
+<li>relies on continuous daemon-status polling for UI state synchronization.</li>
 </ol>
 <p>The daemon:</p>
 <ol>
@@ -119,7 +119,7 @@
 </ol>
 <h3 id="successful-connection">Successful connection</h3>
 <p>The monitor looks for OpenVPN's <code>Initialization Sequence Completed</code> marker in the session log. Once found, daemon state becomes <code>CONNECTED</code>.</p>
-<p>The GUI sees the state transition, synchronizes its widgets, and shows connection information including the country, server IP, ping, speed, and users. If a new GUI instance starts while the daemon is already <code>CONNECTED</code>, it can show the same connection information from the existing daemon state.</p>
+<p>The GUI observes the daemon state through continuous polling, synchronizes its widgets and system-tray state, and shows connection information including the country, server IP, ping, speed, and users. If a new GUI instance starts while the daemon is already <code>CONNECTED</code>, it can show the same connection information from the existing daemon state.</p>
 <h3 id="disconnecting">Disconnecting</h3>
 <p>The GUI sends <code>STOP_VPN</code> and then <code>ENABLE_IPV6</code>.</p>
 <p>The daemon terminates OpenVPN, removes <code>/run/cyphergate/config.ovpn</code>, closes the log handle, stops the monitor, and resets connection state.</p>

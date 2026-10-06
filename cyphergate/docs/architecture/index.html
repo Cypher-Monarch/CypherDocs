@@ -44,9 +44,9 @@
       <p class="docs-eyebrow">CypherGate</p>
 
 <h1 id="cyphergate-architecture">CypherGate Architecture</h1>
-<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p class="docs-updated">Updated <time datetime="2026-10-06">October 6, 2026</time></p>
 <blockquote>
-<p>Current implementation: v2.1.0 (Linux)</p>
+<p>Current implementation: v2.1.1 (Linux)</p>
 </blockquote>
 <h2 id="overview">Overview</h2>
 <p>CypherGate is split into an unprivileged Qt GUI and a privileged daemon.</p>
@@ -81,8 +81,8 @@
 <li>prepares <code>.ovpn</code> configuration data;</li>
 <li>writes the generated configuration to the user-side VPN directory;</li>
 <li>requests privileged operations through the IPC layer;</li>
-<li>polls daemon state;</li>
-<li>synchronizes widgets from daemon state;</li>
+<li>continuously polls daemon state;</li>
+<li>synchronizes widgets and system-tray state from daemon state;</li>
 <li>applies user configuration to the GUI;</li>
 <li>displays connection/disconnection notifications.</li>
 </ul>
@@ -149,6 +149,7 @@
 <h2 id="state-ownership">State ownership</h2>
 <p>The daemon is the source of truth for VPN lifecycle state.</p>
 <p>The GUI does not need to keep the VPN process alive. Instead, it asks the daemon for state and maps that state to UI state.</p>
+<p>The GUI continuously polls daemon state so that each GUI instance remains synchronized with the authoritative daemon state, including system-tray state.</p>
 <p>The UI synchronization rules are centralized in <code>ui/status.py</code>:</p>
 <table>
 <thead>

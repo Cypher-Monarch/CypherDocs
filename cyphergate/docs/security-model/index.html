@@ -44,7 +44,7 @@
       <p class="docs-eyebrow">CypherGate</p>
 
 <h1 id="security-model">Security Model</h1>
-<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p class="docs-updated">Updated <time datetime="2026-10-06">October 6, 2026</time></p>
 <h2 id="trust-boundaries">Trust boundaries</h2>
 <p>CypherGate has two major local trust domains:</p>
 <pre><code class="language-text">unprivileged GUI / local client
@@ -86,6 +86,7 @@
 <li><code>auth-user-pass-verify</code></li>
 <li><code>config</code></li>
 </ul>
+<p>The validator normalizes OpenVPN directive names by removing leading <code>-</code> characters before applying the forbidden-directive policy. This ensures that alternate forms such as <code>up</code> and <code>--up</code> are treated equivalently and cannot bypass validation.</p>
 <p>The validator also requires <code>script-security 0</code>. Any parsed value greater than zero is rejected.</p>
 <p>The validator is intentionally policy-oriented rather than a complete OpenVPN configuration parser.</p>
 <h2 id="logs">Logs</h2>

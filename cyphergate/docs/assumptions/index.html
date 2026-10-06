@@ -44,7 +44,7 @@
       <p class="docs-eyebrow">CypherGate</p>
 
 <h1 id="architectural-assumptions">Architectural Assumptions</h1>
-<p class="docs-updated">Updated <time datetime="2026-09-14">September 14, 2026</time></p>
+<p class="docs-updated">Updated <time datetime="2026-10-06">October 6, 2026</time></p>
 <p>This document records assumptions that are easy to lose during refactors.</p>
 <h2 id="daemon-assumptions">Daemon assumptions</h2>
 <ul>
@@ -58,7 +58,7 @@
 <li>The GUI is a client of the daemon rather than the owner of the VPN lifecycle.</li>
 <li>The GUI may disappear while the daemon continues running.</li>
 <li>A new GUI instance must synchronize itself from daemon state.</li>
-<li>GUI polling is currently used for state observation.</li>
+<li>The GUI continuously polls daemon state for state observation and UI synchronization.</li>
 <li>User-facing application behavior is controlled by the per-user settings file where applicable.</li>
 <li>Configuration changes may be applied at runtime for settings explicitly supported by the configuration watcher.</li>
 </ul>
