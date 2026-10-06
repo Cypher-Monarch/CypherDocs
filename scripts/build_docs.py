@@ -208,6 +208,12 @@ def render_markdown(source: str) -> tuple[str, list[tuple[int, str, str]]]:
     return rendered, headings
 
 
+def toc_label(title: str) -> str:
+    """Convert Markdown heading syntax into plain visible TOC text."""
+    title = re.sub(r"`([^`]*)`", r"\1", title)
+    return html.escape(title)
+
+
 def build_toc(headings: list[tuple[int, str, str]]) -> str:
     """
     Build the compact right-hand TOC.
@@ -222,7 +228,7 @@ def build_toc(headings: list[tuple[int, str, str]]) -> str:
             continue
 
         # Escape the visible title because it originates in Markdown source.
-        label = html.escape(title)
+        label = toc_label(title)
         href = html.escape("#" + fragment_id, quote=True)
 
         items.append(f'<a href="{href}" class="toc-level-{level}">{label}</a>')
